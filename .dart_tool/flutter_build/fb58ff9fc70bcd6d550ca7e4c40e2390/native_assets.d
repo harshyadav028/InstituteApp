@@ -1,0 +1,1 @@
+ /home/friday_code/Desktop/White_Rebels/uhl_link/.dart_tool/flutter_build/fb58ff9fc70bcd6d550ca7e4c40e2390/native_assets.yaml: 
