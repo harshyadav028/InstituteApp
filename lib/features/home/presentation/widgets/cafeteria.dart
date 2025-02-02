@@ -1,60 +1,63 @@
-import 'dart:convert';
+import 'dart:convert'; // Importing necessary libraries for JSON parsing
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:simple_animations/simple_animations.dart';
+import 'package:flutter/material.dart'; // Importing Flutter material design package
+import 'package:flutter/services.dart'; // Importing services package for asset loading
+import 'package:simple_animations/simple_animations.dart'; // Importing simple animations package for smooth transitions
 
+// Widget for creating a fade animation effect
 class FadeAnimation extends StatelessWidget {
-  final double delay;
-  final Widget child;
+  final double delay; // Delay for the animation
+  final Widget child; // Widget to apply the animation on
 
-  const FadeAnimation({super.key, required this.delay, required this.child});
+  const FadeAnimation({super.key, required this.delay, required this.child}); // Constructor for the widget
 
   @override
   Widget build(BuildContext context) {
-    final tween = MovieTween()
+    final tween = MovieTween() // Creating an animation sequence
       ..tween('opacity', Tween(begin: 0.0, end: 1.0),
-          duration: Duration(milliseconds: 500)) // Fade In
+          duration: Duration(milliseconds: 500)) // Fade In effect
       ..tween('translateY', Tween(begin: 120.0, end: 0.0),
-          duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+          duration: Duration(milliseconds: 500), curve: Curves.easeOut); // Slide Up effect
 
-    return PlayAnimationBuilder<Movie>(
+    return PlayAnimationBuilder<Movie>( // Building the animation with a delay
       delay: Duration(milliseconds: (50 * delay).round()),
-      duration: tween.duration,
-      tween: tween,
-      child: child,
-      builder: (context, animation, child) => Opacity(
+      duration: tween.duration, // Duration of the animation
+      tween: tween, // The tween animation sequence
+      child: child, // The widget to apply animation
+      builder: (context, animation, child) => Opacity( // Using opacity and translation for the animation effect
         opacity: animation.get('opacity'),
         child: Transform.translate(
-          offset: Offset(0, animation.get('translateY')),
-          child: child,
+          offset: Offset(0, animation.get('translateY')), // Translate the widget upwards
+          child: child, // The widget to be animated
         ),
       ),
     );
   }
 }
 
+// Cafeteria screen widget
 class Cafeteria extends StatefulWidget {
-  const Cafeteria({super.key});
+  const Cafeteria({super.key}); // Constructor for the Cafeteria widget
 
   @override
-  createState() => _CafeteriaState();
+  createState() => _CafeteriaState(); // State creation for the Cafeteria widget
 }
 
 class _CafeteriaState extends State<Cafeteria> {
-  List<Map<String, dynamic>> cafeterias = [];
+  List<Map<String, dynamic>> cafeterias = []; // List to hold cafeteria data
 
   @override
   void initState() {
     super.initState();
-    readJson();
+    readJson(); // Load JSON data when the widget is initialized
   }
 
+  // Method to load and parse the JSON data
   Future<void> readJson() async {
     try {
       // Load JSON file from assets
       String response = await rootBundle.loadString('assets/cafeteria.json');
-      Map<String, dynamic> data = json.decode(response);
+      Map<String, dynamic> data = json.decode(response); // Parse the JSON
 
       // Ensure JSON structure is correct
       if (data.containsKey("cafeterias")) {
@@ -63,33 +66,32 @@ class _CafeteriaState extends State<Cafeteria> {
         });
       }
     } catch (e) {
-      print("Error loading JSON: $e");
+      print("Error loading JSON: $e"); // Error handling for JSON loading
     }
   }
 
-
-  int _show = -1;
-  String _searched = "";
-  bool _imageLoading = true;
+  int _show = -1; // To manage selected cafeteria index for menu display
+  String _searched = ""; // To hold the searched cafeteria name
+  bool _imageLoading = true; // To manage image loading state
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.sizeOf(context);
+    var screenSize = MediaQuery.sizeOf(context); // Get screen size for responsive UI
     List<Map<String, dynamic>> filteredCafeterias = cafeterias
         .where((cafe) =>
-        cafe["name"]!.toLowerCase().contains(_searched.toLowerCase()))
+        cafe["name"]!.toLowerCase().contains(_searched.toLowerCase())) // Filter cafeterias based on search input
         .toList();
 
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor, // Set background color
           appBar: AppBar(
-            backgroundColor: Colors.blueGrey.withOpacity(0.15),
+            backgroundColor: Colors.blueGrey.withOpacity(0.15), // Customize app bar
             title: const Text(
               "Cafeterias",
               style:
-              TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.black, fontWeight: FontWeight.bold), // Set app bar title
             ),
             centerTitle: true,
           ),
@@ -99,18 +101,18 @@ class _CafeteriaState extends State<Cafeteria> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                    borderRadius: const BorderRadius.all(Radius.circular(6)), // Styling search container
                     border: Border.all(width: 0.3),
                   ),
                   child: TextField(
                     onChanged: (value) {
                       setState(() {
-                        _searched = value;
+                        _searched = value; // Update search query
                       });
                     },
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: "Search Cafeteria",
+                      prefixIcon: const Icon(Icons.search), // Search icon
+                      hintText: "Search Cafeteria", // Search placeholder text
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),
@@ -118,7 +120,7 @@ class _CafeteriaState extends State<Cafeteria> {
                   ),
                 ),
               ),
-              if (filteredCafeterias.isNotEmpty)
+              if (filteredCafeterias.isNotEmpty) // Check if filtered cafeterias exist
                 Expanded(
                   child: ListView.builder(
                     itemCount: filteredCafeterias.length,
@@ -126,10 +128,10 @@ class _CafeteriaState extends State<Cafeteria> {
                       final cafe = filteredCafeterias[index];
 
                       return FadeAnimation(
-                        delay: 0.5 * index,
+                        delay: 0.5 * index, // Apply animation delay based on index
                         child: Container(
                           margin: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
+                              horizontal: 16, vertical: 8), // Style the card container
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: Colors.black, style: BorderStyle.solid),
@@ -173,49 +175,49 @@ class _CafeteriaState extends State<Cafeteria> {
                                   Row(
                                     children: [
                                       const Icon(Icons.access_time,
-                                          color: Colors.black, size: 20),
+                                          color: Colors.black, size: 20), // Opening time icon
                                       const SizedBox(width: 8),
                                       Text("Time: ${cafe["openingTime"]}",
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyLarge),
+                                              .bodyLarge), // Opening time text
                                     ],
                                   ),
                                   const SizedBox(height: 6),
                                   Row(
                                     children: [
                                       const Icon(Icons.delivery_dining,
-                                          color: Colors.black, size: 20),
+                                          color: Colors.black, size: 20), // Delivery time icon
                                       const SizedBox(width: 8),
                                       Text("Delivery: ${cafe["deliveryTime"]}",
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyLarge),
+                                              .bodyLarge), // Delivery time text
                                     ],
                                   ),
                                   const SizedBox(height: 6),
                                   Row(
                                     children: [
                                       const Icon(Icons.phone,
-                                          color: Colors.black, size: 20),
+                                          color: Colors.black, size: 20), // Phone icon
                                       const SizedBox(width: 8),
                                       Text(cafe["contact"]!,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyLarge),
+                                              .bodyLarge), // Contact number text
                                     ],
                                   ),
                                   const SizedBox(height: 6),
                                   Row(
                                     children: [
                                       const Icon(Icons.location_on_outlined,
-                                          color: Colors.black, size: 20),
+                                          color: Colors.black, size: 20), // Location icon
                                       const SizedBox(width: 8),
                                       Expanded(
                                         child: Text(cafe["location"]!,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyLarge),
+                                                .bodyLarge), // Location text
                                       ),
                                     ],
                                   ),
@@ -225,7 +227,7 @@ class _CafeteriaState extends State<Cafeteria> {
                                     child: ElevatedButton(
                                       onPressed: () {
                                         setState(() {
-                                          _show = index;
+                                          _show = index; // Set the index to show menu
                                           _imageLoading =
                                           true; // Reset loading state
                                         });
@@ -238,7 +240,7 @@ class _CafeteriaState extends State<Cafeteria> {
                                       ),
                                       child: const Text(
                                         "View Menu",
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(color: Colors.white), // Button text
                                       ),
                                     ),
                                   ),
@@ -256,13 +258,13 @@ class _CafeteriaState extends State<Cafeteria> {
                   padding: EdgeInsets.all(20.0),
                   child: Text(
                     "No Cafeteria Found",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Message when no cafeteria found
                   ),
                 ),
             ],
           ),
         ),
-        if (_show != -1)
+        if (_show != -1) // Check if a cafeteria's menu is to be shown
           Container(
             color: Colors.black.withOpacity(0.8),
             child: Column(
@@ -270,11 +272,11 @@ class _CafeteriaState extends State<Cafeteria> {
               children: [
                 Expanded(
                   child: PageView.builder(
-                    itemCount: cafeterias[_show]["menuImages"].length,
+                    itemCount: cafeterias[_show]["menuImages"].length, // Show the menu images
                     itemBuilder: (context, imgIndex) {
                       return Center(
                         child: Image.network(
-                          cafeterias[_show]["menuImages"][imgIndex],
+                          cafeterias[_show]["menuImages"][imgIndex], // Show image from the menu
                           fit: BoxFit.contain,
                         ),
                       );
@@ -283,21 +285,21 @@ class _CafeteriaState extends State<Cafeteria> {
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red[400]
+                        backgroundColor: Colors.red[400] // Close button style
                     ),
                     onPressed: () {
                       setState(() {
-                        _show = -1;
+                        _show = -1; // Close the menu view
                       });
                     },
                     child: Container(
-                      width: screenSize.width/4,
+                      width: screenSize.width/4, // Set close button width
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.close,size: 25,color: Colors.black,),
+                          const Icon(Icons.close,size: 25,color: Colors.black,), // Close icon
                           SizedBox(width: 6,),
-                          const Text("Close", style: TextStyle(fontSize: 18,color: Colors.black),),
+                          const Text("Close", style: TextStyle(fontSize: 18,color: Colors.black),), // Close text
                         ],
                       ),
                     )
