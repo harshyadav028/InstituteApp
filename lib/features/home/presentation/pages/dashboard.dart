@@ -45,8 +45,7 @@ class _DashboardState extends State<Dashboard> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
                      child: Column(
                       mainAxisSize: MainAxisSize.min,
                             children: [
@@ -78,9 +77,7 @@ class _DashboardState extends State<Dashboard> {
                                      
                                    ],
                                    ),
-                   ),
-                 );            
-    
+                   );   
   }
 }
 
