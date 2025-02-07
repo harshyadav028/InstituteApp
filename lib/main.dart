@@ -7,10 +7,12 @@ import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes.dart';
 import 'package:uhl_link/features/authentication/data/data_sources/user_data_sources.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/get_user_by_email.dart';
+import 'package:uhl_link/features/authentication/domain/usecases/signup_user.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/update_password.dart';
 import 'package:uhl_link/utils/theme.dart';
 
 import 'features/authentication/data/repository_implementations/user_repository_impl.dart';
+import 'features/authentication/domain/usecases/send_otp.dart';
 import 'features/authentication/domain/usecases/signin_user.dart';
 import 'features/authentication/presentation/bloc/user_bloc.dart';
 import 'features/home/data/data_sources/job_portal_data_sources.dart';
@@ -59,7 +61,9 @@ class UhlLink extends StatelessWidget {
                   updatePassword:
                       UpdatePassword(UserRepositoryImpl(UhlUsersDB())),
                   getUserByEmail:
-                      GetUserByEmail(UserRepositoryImpl(UhlUsersDB())))),
+                      GetUserByEmail(UserRepositoryImpl(UhlUsersDB())), 
+                  signUpUser: SignUpUser(UserRepositoryImpl(UhlUsersDB())),
+                  sendOTP: SendOTP(UserRepositoryImpl(UhlUsersDB())))),
           BlocProvider<JobPortalBloc>(
               create: (context) => JobPortalBloc(
                     getJobs: GetJobs(JobPortalRepositoryImpl(JobPortalDB())),

@@ -6,7 +6,7 @@ import 'package:uhl_link/features/home/presentation/pages/academics.dart';
 import 'package:uhl_link/features/home/presentation/pages/dashboard.dart';
 import 'package:uhl_link/features/home/presentation/pages/explore.dart';
 import 'package:uhl_link/features/home/presentation/pages/profile.dart';
-import 'package:uhl_link/features/home/presentation/pages/job_portal_page.dart';
+import 'package:uhl_link/features/home/presentation/pages/job_portal.dart';
 
 import '../../../../config/routes/routes_consts.dart';
 
@@ -36,8 +36,7 @@ class _HomePageState extends State<HomePage> {
       Dashboard(isGuest: widget.isGuest),
       Explore(isGuest: widget.isGuest),
       Academics(isGuest: widget.isGuest, user: widget.user),
-      // Notifications(isGuest: widget.isGuest),
-      JobPortalPage(),
+      const JobPortalPage(),
       Profile(isGuest: widget.isGuest, user: widget.user),
     ];
     return Scaffold(
@@ -47,13 +46,10 @@ class _HomePageState extends State<HomePage> {
             style: Theme.of(context).textTheme.bodyMedium),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
+            icon: Icon(Icons.notifications_none_rounded, color: Theme.of(context).colorScheme.onSurface),
             onPressed: () {
-              // Navigate to the Notification Page
-              GoRouter.of(context).pushNamed(UhlLinkRoutesNames.notifications, pathParameters: {'isGuest' : jsonEncode(widget.isGuest)});
-              // onPressed: () {
-              //   context.go('/notifications'); // Navigate to the notifications page
-              // };
+              GoRouter.of(context).pushNamed(UhlLinkRoutesNames.notifications,
+                  pathParameters: {'isGuest': jsonEncode(widget.isGuest)});
             },
           ),
         ],
@@ -61,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       ),
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: homePages[currentBottomBarIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -80,7 +76,7 @@ class _HomePageState extends State<HomePage> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           selectedIconTheme:
-          IconThemeData(size: 30, color: Theme.of(context).primaryColor),
+              IconThemeData(size: 30, color: Theme.of(context).primaryColor),
           unselectedIconTheme: IconThemeData(
               size: 25, color: Theme.of(context).colorScheme.onSurface),
           items: const [
@@ -92,8 +88,7 @@ class _HomePageState extends State<HomePage> {
                 icon: Icon(Icons.school_rounded), label: "Academics"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.work_outline_rounded), label: "Job Portal"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person), label: "Profile"),
+            BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: "Profile"),
           ]),
     );
   }
