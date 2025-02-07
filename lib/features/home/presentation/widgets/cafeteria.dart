@@ -3,13 +3,17 @@ import 'dart:convert'; // Importing necessary libraries for JSON parsing
 import 'package:flutter/material.dart'; // Importing Flutter material design package
 import 'package:flutter/services.dart'; // Importing services package for asset loading
 import 'package:simple_animations/simple_animations.dart'; // Importing simple animations package for smooth transitions
+import 'package:smooth_page_indicator/smooth_page_indicator.dart'; // Import for page indicators
 
 // Widget for creating a fade animation effect
 class FadeAnimation extends StatelessWidget {
   final double delay; // Delay for the animation
   final Widget child; // Widget to apply the animation on
 
-  const FadeAnimation({super.key, required this.delay, required this.child}); // Constructor for the widget
+  const FadeAnimation(
+      {super.key,
+        required this.delay,
+        required this.child}); // Constructor for the widget
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +21,21 @@ class FadeAnimation extends StatelessWidget {
       ..tween('opacity', Tween(begin: 0.0, end: 1.0),
           duration: Duration(milliseconds: 500)) // Fade In effect
       ..tween('translateY', Tween(begin: 120.0, end: 0.0),
-          duration: Duration(milliseconds: 500), curve: Curves.easeOut); // Slide Up effect
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeOut); // Slide Up effect
 
-    return PlayAnimationBuilder<Movie>( // Building the animation with a delay
+    return PlayAnimationBuilder<Movie>(
+      // Building the animation with a delay
       delay: Duration(milliseconds: (50 * delay).round()),
       duration: tween.duration, // Duration of the animation
       tween: tween, // The tween animation sequence
       child: child, // The widget to apply animation
-      builder: (context, animation, child) => Opacity( // Using opacity and translation for the animation effect
+      builder: (context, animation, child) => Opacity(
+        // Using opacity and translation for the animation effect
         opacity: animation.get('opacity'),
         child: Transform.translate(
-          offset: Offset(0, animation.get('translateY')), // Translate the widget upwards
+          offset: Offset(
+              0, animation.get('translateY')), // Translate the widget upwards
           child: child, // The widget to be animated
         ),
       ),
@@ -45,6 +53,13 @@ class Cafeteria extends StatefulWidget {
 
 class _CafeteriaState extends State<Cafeteria> {
   List<Map<String, dynamic>> cafeterias = []; // List to hold cafeteria data
+  //require changes
+  final List<String> cafeImages = [
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUwmVgb3neqeHNKLlGiWbtp3Twk9SNoc2y4A&s",
+    "https://www.hindustantimes.com/ht-img/img/2024/09/07/550x309/The-romantic-visitor-is-more-interesting-to-the-ca_1725739263282.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgaWLWxO01zoJh2aohremhWRsksyuEYiBFqQ&s",
+    "https://i.pinimg.com/736x/28/df/25/28df25e025dc6dc4eed109fa81bada4d.jpg"
+  ]; // Constant cafe images
 
   @override
   void initState() {
@@ -76,22 +91,24 @@ class _CafeteriaState extends State<Cafeteria> {
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.sizeOf(context); // Get screen size for responsive UI
+    var screenSize =
+    MediaQuery.sizeOf(context); // Get screen size for responsive UI
     List<Map<String, dynamic>> filteredCafeterias = cafeterias
-        .where((cafe) =>
-        cafe["name"]!.toLowerCase().contains(_searched.toLowerCase())) // Filter cafeterias based on search input
+        .where((cafe) => cafe["name"]!.toLowerCase().contains(
+        _searched.toLowerCase())) // Filter cafeterias based on search input
         .toList();
 
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor, // Set background color
+          backgroundColor: Colors.white, // Set background color
           appBar: AppBar(
-            backgroundColor: Colors.blueGrey.withOpacity(0.15), // Customize app bar
+            backgroundColor: Colors.white30, // Customize app bar
             title: const Text(
               "Cafeterias",
-              style:
-              TextStyle(color: Colors.black, fontWeight: FontWeight.bold), // Set app bar title
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold), // Set app bar title
             ),
             centerTitle: true,
           ),
@@ -101,8 +118,9 @@ class _CafeteriaState extends State<Cafeteria> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(6)), // Styling search container
-                    border: Border.all(width: 0.3),
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(6)), // Styling search container
+                    border: Border.all(width: 0.3, color: Colors.black),
                   ),
                   child: TextField(
                     onChanged: (value) {
@@ -111,136 +129,188 @@ class _CafeteriaState extends State<Cafeteria> {
                       });
                     },
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search), // Search icon
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ), // Search icon
                       hintText: "Search Cafeteria", // Search placeholder text
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: BorderRadius.circular(1),
                       ),
                     ),
                   ),
                 ),
               ),
-              if (filteredCafeterias.isNotEmpty) // Check if filtered cafeterias exist
+              if (filteredCafeterias
+                  .isNotEmpty) // Check if filtered cafeterias exist
                 Expanded(
                   child: ListView.builder(
                     itemCount: filteredCafeterias.length,
                     itemBuilder: (context, index) {
                       final cafe = filteredCafeterias[index];
-
+                      PageController pageController = PageController();
                       return FadeAnimation(
-                        delay: 0.5 * index, // Apply animation delay based on index
+                        delay:
+                        0.5 * index, // Apply animation delay based on index
                         child: Container(
                           margin: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8), // Style the card container
+                              horizontal: 16,
+                              vertical: 8), // Style the card container
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.black, style: BorderStyle.solid),
+                            border: Border.all(width: 1.4),
                             borderRadius: BorderRadius.circular(12),
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.blueGrey.withOpacity(0.1),
-                                Theme.of(context).cardColor.withOpacity(0.4),
-                              ],
-                              begin: Alignment.bottomRight,
-                              end: Alignment.topCenter,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 5,
-                                spreadRadius: 2,
-                              ),
-                            ],
+                            color: Colors.grey.withValues(alpha: 0.1),
                           ),
                           child: Card(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
-                            elevation: 0,
+                            elevation: 8,
+                            shadowColor: Colors.black12.withValues(alpha: 0.01),
                             color: Colors.transparent,
                             child: Padding(
                               padding: const EdgeInsets.all(16),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 0.5, color: Colors.black)),
+                                    height: 200,
+                                    child: PageView.builder(
+                                      controller: pageController,
+                                      itemCount: cafeImages.length,
+                                      itemBuilder: (context, imgIndex) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 0),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                            BorderRadius.circular(2),
+                                            child: Image.network(
+                                              cafeImages[imgIndex],
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+
+                                  // Dot Indicator
+                                  Center(
+                                    child: SmoothPageIndicator(
+                                      controller: pageController,
+                                      count: cafeImages.length,
+                                      effect: ExpandingDotsEffect(
+                                        dotHeight: 8,
+                                        dotWidth: 8,
+                                        activeDotColor: Colors.blueAccent,
+                                      ),
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 16),
+
                                   Text(
                                     cafe["name"]!,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium
                                         ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 22),
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 24),
                                   ),
                                   const SizedBox(height: 8),
                                   Row(
                                     children: [
-                                      const Icon(Icons.access_time,
-                                          color: Colors.black, size: 20), // Opening time icon
-                                      const SizedBox(width: 8),
-                                      Text("Time: ${cafe["openingTime"]}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge), // Opening time text
+                                      Row(
+                                        children: [
+                                          Text(" Time:",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 18)),
+                                          Text(" ${cafe["openingTime"]}",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 17)),
+                                        ],
+                                      ), // Opening time text
                                     ],
                                   ),
                                   const SizedBox(height: 6),
                                   Row(
                                     children: [
-                                      const Icon(Icons.delivery_dining,
-                                          color: Colors.black, size: 20), // Delivery time icon
-                                      const SizedBox(width: 8),
-                                      Text("Delivery: ${cafe["deliveryTime"]}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge), // Delivery time text
+                                      Text(" Delivery:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 18)),
+                                      Text(" ${cafe["deliveryTime"]}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize:
+                                              17)), // Delivery time text
                                     ],
                                   ),
                                   const SizedBox(height: 6),
                                   Row(
                                     children: [
-                                      const Icon(Icons.phone,
-                                          color: Colors.black, size: 20), // Phone icon
-                                      const SizedBox(width: 8),
+                                      Text(" Contact:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 18)),
                                       Text(cafe["contact"]!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge), // Contact number text
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize:
+                                              17)), // Contact number text
                                     ],
                                   ),
                                   const SizedBox(height: 6),
                                   Row(
                                     children: [
-                                      const Icon(Icons.location_on_outlined,
-                                          color: Colors.black, size: 20), // Location icon
-                                      const SizedBox(width: 8),
+                                      Text(" Location:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 18)),
                                       Expanded(
                                         child: Text(cafe["location"]!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge), // Location text
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 17)), // Location text
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 5),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: ElevatedButton(
                                       onPressed: () {
                                         setState(() {
-                                          _show = index; // Set the index to show menu
+                                          _show =
+                                              index; // Set the index to show menu
                                           _imageLoading =
                                           true; // Reset loading state
                                         });
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.black87,
+                                        padding: EdgeInsets.only(
+                                            top: 5,
+                                            bottom: 5,
+                                            left: 16,
+                                            right: 16),
+                                        backgroundColor: Colors.blueAccent,
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                             BorderRadius.circular(8)),
                                       ),
                                       child: const Text(
                                         "View Menu",
-                                        style: TextStyle(color: Colors.white), // Button text
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 18,
+                                            color: Colors.white), // Button text
                                       ),
                                     ),
                                   ),
@@ -258,7 +328,10 @@ class _CafeteriaState extends State<Cafeteria> {
                   padding: EdgeInsets.all(20.0),
                   child: Text(
                     "No Cafeteria Found",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Message when no cafeteria found
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight:
+                        FontWeight.bold), // Message when no cafeteria found
                   ),
                 ),
             ],
@@ -271,21 +344,30 @@ class _CafeteriaState extends State<Cafeteria> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: PageView.builder(
-                    itemCount: cafeterias[_show]["menuImages"].length, // Show the menu images
-                    itemBuilder: (context, imgIndex) {
-                      return Center(
-                        child: Image.network(
-                          cafeterias[_show]["menuImages"][imgIndex], // Show image from the menu
-                          fit: BoxFit.contain,
-                        ),
-                      );
-                    },
+                  child: InteractiveViewer(
+                    panEnabled: true,
+                    panAxis: PanAxis.free,
+                    child: PageView.builder(
+                      itemCount: cafeterias[_show]["menuImages"]
+                          .length, // Show the menu images
+                      itemBuilder: (context, imgIndex) {
+                        return Center(
+                          child: Image.network(
+                            cafeterias[_show]["menuImages"]
+                            [imgIndex], // Show image from the menu
+                            fit: BoxFit.contain,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red[400] // Close button style
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(3))),
+                        backgroundColor:
+                        Colors.redAccent[200] // Close button style
                     ),
                     onPressed: () {
                       setState(() {
@@ -293,17 +375,25 @@ class _CafeteriaState extends State<Cafeteria> {
                       });
                     },
                     child: Container(
-                      width: screenSize.width/4, // Set close button width
+                      width: screenSize.width / 4, // Set close button width
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.close,size: 25,color: Colors.black,), // Close icon
-                          SizedBox(width: 6,),
-                          const Text("Close", style: TextStyle(fontSize: 18,color: Colors.black),), // Close text
+                          const Icon(
+                            Icons.close,
+                            size: 25,
+                            color: Colors.white,
+                          ), // Close icon
+                          SizedBox(
+                            width: 6,
+                          ),
+                          const Text(
+                            "Close",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ), // Close text
                         ],
                       ),
-                    )
-                ),
+                    )),
               ],
             ),
           )
