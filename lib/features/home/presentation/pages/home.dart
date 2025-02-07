@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       ),
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: homePages[currentBottomBarIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
