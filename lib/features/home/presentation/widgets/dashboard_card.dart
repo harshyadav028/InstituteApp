@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 class DashboardCard extends StatefulWidget {
   final String title;
   final IconData icon;
-  final String path;
+  final void Function() onTap;
 
   const DashboardCard(
-      {super.key, required this.title, required this.icon, required this.path});
+      {super.key, required this.title, required this.icon, required this.onTap});
 
   @override
   State<DashboardCard> createState() => _DashboardCardState();
@@ -22,9 +22,7 @@ class _DashboardCardState extends State<DashboardCard> {
       height: (width - 30 - 10) / 3,
       width: (width - 30 - 10) / 3,
       child: GestureDetector(
-        onTap: () {
-          GoRouter.of(context).pushNamed(widget.path);
-        },
+        onTap: widget.onTap,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),

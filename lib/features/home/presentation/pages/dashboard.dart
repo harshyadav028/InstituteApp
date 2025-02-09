@@ -1,13 +1,17 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
 import 'package:uhl_link/features/home/presentation/widgets/dashboard_card.dart';
 
 class Dashboard extends StatefulWidget {
   final bool isGuest;
+  final Map<String, dynamic>? user;
 
-  const Dashboard({super.key, required this.isGuest});
+  const Dashboard({super.key, required this.isGuest, required this.user});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -24,39 +28,6 @@ final List<String> carouselImages = [
 ];
 
 class _DashboardState extends State<Dashboard> {
-  List<Map<String, dynamic>> items = [
-    {
-      "title": 'Lost/Found',
-      "icon": Icons.card_travel,
-      'path': UhlLinkRoutesNames.lostFoundPage,
-    },
-    {
-      "title": 'Buy/Sell',
-      "icon": Icons.shopping_cart_outlined,
-      "path": UhlLinkRoutesNames.test,
-    },
-    {
-      "title": 'Maps',
-      "icon": Icons.map_outlined,
-      "path": UhlLinkRoutesNames.campusMapPage,
-    },
-    {
-      "title": 'Calendar',
-      "icon": Icons.calendar_today_outlined,
-      "path": UhlLinkRoutesNames.academicCalenderPage,
-    },
-    {
-      "title": 'Events',
-      "icon": Icons.menu,
-      "path": UhlLinkRoutesNames.test,
-    },
-    {
-      "title": 'Mess Menu',
-      "icon": Icons.restaurant,
-      "path": UhlLinkRoutesNames.messMenuPage,
-    },
-  ];
-
   Widget carouselIndicatorWidget() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +42,7 @@ class _DashboardState extends State<Dashboard> {
             decoration: BoxDecoration(
               color: i == currentImage
                   ? Theme.of(context).primaryColor
-                  : Theme.of(context).colorScheme.onPrimary,
+                  : Theme.of(context).colorScheme.scrim,
               shape: BoxShape.circle,
             ),
           )
@@ -81,6 +52,47 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> items = [
+      {
+        "title": 'Lost/Found',
+        "icon": Icons.card_travel,
+        'path': UhlLinkRoutesNames.lostFoundPage,
+        'pathParameters': {
+          "isGuest": jsonEncode(widget.isGuest),
+          "user": jsonEncode(widget.user)
+        }
+      },
+      {
+        "title": 'Buy/Sell',
+        "icon": Icons.shopping_cart_outlined,
+        "path": UhlLinkRoutesNames.test,
+        'pathParameters': {}
+      },
+      {
+        "title": 'Maps',
+        "icon": Icons.map_outlined,
+        "path": UhlLinkRoutesNames.campusMapPage,
+        'pathParameters': {}
+      },
+      {
+        "title": 'Calendar',
+        "icon": Icons.calendar_today_outlined,
+        "path": UhlLinkRoutesNames.academicCalenderPage,
+        'pathParameters': {}
+      },
+      {
+        "title": 'Events',
+        "icon": Icons.menu,
+        "path": UhlLinkRoutesNames.test,
+        'pathParameters': {}
+      },
+      {
+        "title": 'Mess Menu',
+        "icon": Icons.restaurant,
+        "path": UhlLinkRoutesNames.messMenuPage,
+        'pathParameters': {}
+      },
+    ];
     final screenSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
       reverse: true,
@@ -147,7 +159,17 @@ class _DashboardState extends State<Dashboard> {
                   DashboardCard(
                     title: items[i]['title'],
                     icon: items[i]['icon'],
-                    path: items[i]['path'],
+                    onTap: () {
+                      if (items[i]['pathParameters'] != null &&
+                          items[i]['pathParameters'].isNotEmpty) {
+                        GoRouter.of(context).pushNamed(
+                          items[i]['path'],
+                          pathParameters: items[i]['pathParameters'],
+                        );
+                      } else {
+                        GoRouter.of(context).pushNamed(items[i]['path']);
+                      }
+                    },
                   ),
               ],
             ),

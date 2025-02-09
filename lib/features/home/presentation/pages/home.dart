@@ -33,8 +33,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> homePages = [
-      Dashboard(isGuest: widget.isGuest),
-      Explore(isGuest: widget.isGuest),
+      Dashboard(isGuest: widget.isGuest, user: widget.user),
+      Explore(isGuest: widget.isGuest, user: widget.user),
       Academics(isGuest: widget.isGuest, user: widget.user),
       const JobPortalPage(),
       Profile(isGuest: widget.isGuest, user: widget.user),
@@ -46,7 +46,8 @@ class _HomePageState extends State<HomePage> {
             style: Theme.of(context).textTheme.bodyMedium),
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications_none_rounded, color: Theme.of(context).colorScheme.onSurface),
+            icon: Icon(Icons.notifications_none_rounded,
+                color: Theme.of(context).colorScheme.onSurface),
             onPressed: () {
               GoRouter.of(context).pushNamed(UhlLinkRoutesNames.notifications,
                   pathParameters: {'isGuest': jsonEncode(widget.isGuest)});
@@ -88,7 +89,8 @@ class _HomePageState extends State<HomePage> {
                 icon: Icon(Icons.school_rounded), label: "Academics"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.work_outline_rounded), label: "Job Portal"),
-            BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: "Profile"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_rounded), label: "Profile"),
           ]),
     );
   }
