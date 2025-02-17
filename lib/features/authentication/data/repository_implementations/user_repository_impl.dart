@@ -69,8 +69,8 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<bool?> updatePassword(String id, String password) async {
-    return await authDatabase.updatePassword(id, password);
+  Future<bool?> updatePassword(String email, String password) async {
+    return await authDatabase.updatePassword(email, password);
   }
 
   @override

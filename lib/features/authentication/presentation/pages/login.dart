@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
 import 'package:uhl_link/features/authentication/domain/entities/user_entity.dart';
+import 'package:uhl_link/utils/password_functions.dart';
 
 import '../../../../widgets/form_field_widget.dart';
 import '../../../../widgets/screen_width_button.dart';
@@ -170,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           onChanged: (String? value) async {
                             if (currentUser != null) {
-                              if (currentUser?.password == value) {
+                              if (validatePassword(value ?? "", currentUser!.password)) {
                                 _isPasswordValid = true;
                               } else {
                                 _isPasswordValid = false;
