@@ -1,12 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/authentication/data/data_sources/user_data_sources.dart';
 import '../../../../widgets/screen_width_button.dart';
-import '../bloc/user_bloc.dart';
 
 class ChooseAuthPage extends StatefulWidget {
   const ChooseAuthPage({super.key});

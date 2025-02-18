@@ -38,11 +38,11 @@ class UserRepositoryImpl implements UserRepository {
       final smtpServer = gmail(maintainerEmail, maintainerPassword);
 
       final message = Message()
-        ..from = Address(maintainerEmail, "Uhl Link Team")
+        ..from = Address(maintainerEmail, "Vertex Team")
         ..recipients.add(email)
-        ..subject = 'OTP for Sign Up on UhlLink'
+        ..subject = 'OTP for Sign Up on Vertex: IIT Mandi'
         ..text =
-            'Dear $name,\nYour OTP for Sign Up on UhlLink is $otp.\n\n Best Regards,\nUhlLink Team\nIIT Mandi, Kamand 175005';
+            'Dear $name,\nYour OTP for Sign Up on Vertex is $otp.\n\n Best Regards,\nVertex Team\nIIT Mandi, Kamand 175005';
 
       final sendReport = await send(message, smtpServer);
       return sendReport;
