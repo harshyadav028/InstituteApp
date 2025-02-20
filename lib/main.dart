@@ -27,16 +27,20 @@ import 'features/home/presentation/bloc/lost_found_bloc/lnf_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: "institute.env");
-  await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
-  await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
-  await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   const storage = FlutterSecureStorage();
   final GoRouter router = UhlLinkRouter().router;
   runApp(BlocProvider<ThemeBloc>(
     create: (context) => ThemeBloc(storage: storage)..loadSavedTheme(),
     child: UhlLink(router: router),
   ));
+}
+
+Future<void> func () async {
+
+  await dotenv.load(fileName: "institute.env");
+  await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
 }
 
 class UhlLink extends StatelessWidget {
@@ -47,6 +51,7 @@ class UhlLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    func();
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<SignUpUser>(

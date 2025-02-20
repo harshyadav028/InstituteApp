@@ -24,8 +24,13 @@ class _ChooseAuthPageState extends State<ChooseAuthPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-              Image.asset("assets/images/logo.png"),
-              Text("Uhl Link", style: Theme.of(context).textTheme.titleLarge),
+              Image.asset(
+                "assets/images/logo.png",
+                width: MediaQuery.of(context).size.aspectRatio * 400,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              Text("Vertex", style: Theme.of(context).textTheme.titleLarge!.copyWith(letterSpacing: 2.5)),
+              Text("IIT Mandi", textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium!.copyWith(letterSpacing: 1.5)),
               const Expanded(child: SizedBox()),
               ScreenWidthButton(
                 text: "Sign Up via IIT Mandi E-Mail",

@@ -74,6 +74,23 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/splash_light.png
+  color_dark: "#1A1A1A"
+  image_dark: assets/images/splash_dark.png
+
+  android_12:
+    image: assets/images/splash_light.png
+    icon_background_color: "#FFFFFF"
+    image_dark: assets/images/splash_dark.png
+    icon_background_color_dark: "#1A1A1A"
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

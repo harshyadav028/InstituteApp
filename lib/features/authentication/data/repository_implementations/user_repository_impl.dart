@@ -42,7 +42,7 @@ class UserRepositoryImpl implements UserRepository {
         ..recipients.add(email)
         ..subject = 'OTP for Sign Up on Vertex: IIT Mandi'
         ..text =
-            'Dear $name,\nYour OTP for Sign Up on Vertex is $otp.\n\n Best Regards,\nVertex Team\nIIT Mandi, Kamand 175005';
+            'Dear $name,\nYour OTP for Sign Up on Vertex is $otp.\n\nBest Regards,\nVertex Team\nIIT Mandi, Kamand 175005';
 
       final sendReport = await send(message, smtpServer);
       return sendReport;
