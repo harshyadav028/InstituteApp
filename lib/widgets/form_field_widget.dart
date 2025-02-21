@@ -15,6 +15,7 @@ class FormFieldWidget extends StatefulWidget {
   final TextInputAction textInputAction;
   final void Function()? onTap;
   bool? readOnly;
+  int? maxLines;
 
   FormFieldWidget({
     super.key,
@@ -32,6 +33,7 @@ class FormFieldWidget extends StatefulWidget {
     this.readOnly,
     required this.focusNode,
     required this.textInputAction,
+    this.maxLines
   });
 
   @override
@@ -63,6 +65,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
           onTapOutside: (event) {
             widget.focusNode.unfocus();
           },
+          maxLines: widget.maxLines,
           readOnly: widget.readOnly ?? false,
           onTap: widget.onTap,
           controller: widget.controller,
