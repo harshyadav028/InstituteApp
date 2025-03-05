@@ -92,10 +92,16 @@ class _DashboardState extends State<Dashboard> {
         "path": UhlLinkRoutesNames.messMenuPage,
         'pathParameters': {}
       },
+      {
+        "title": 'Cafeteria',
+        "icon": Icons.local_cafe,
+        "path": UhlLinkRoutesNames.cafeteria,
+        'pathParameters': {}
+      },
     ];
     final screenSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
-      reverse: true,
+      physics: const ClampingScrollPhysics(),
       primary: true,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -147,32 +153,31 @@ class _DashboardState extends State<Dashboard> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.02,
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.28,
-            child: GridView.count(
-              crossAxisCount: 3,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
-              children: [
-                for (int i = 0; i < items.length; i++)
-                  DashboardCard(
-                    title: items[i]['title'],
-                    icon: items[i]['icon'],
-                    onTap: () {
-                      if (items[i]['pathParameters'] != null &&
-                          items[i]['pathParameters'].isNotEmpty) {
-                        GoRouter.of(context).pushNamed(
-                          items[i]['path'],
-                          pathParameters: items[i]['pathParameters'],
-                        );
-                      } else {
-                        GoRouter.of(context).pushNamed(items[i]['path']);
-                      }
-                    },
-                  ),
-              ],
-            ),
+          GridView.count(
+            crossAxisCount: 3,
+            physics: const NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 5,
+            shrinkWrap: true,
+            primary: false,
+            children: [
+              for (int i = 0; i < items.length; i++)
+                DashboardCard(
+                  title: items[i]['title'],
+                  icon: items[i]['icon'],
+                  onTap: () {
+                    if (items[i]['pathParameters'] != null &&
+                        items[i]['pathParameters'].isNotEmpty) {
+                      GoRouter.of(context).pushNamed(
+                        items[i]['path'],
+                        pathParameters: items[i]['pathParameters'],
+                      );
+                    } else {
+                      GoRouter.of(context).pushNamed(items[i]['path']);
+                    }
+                  },
+                ),
+            ],
           ),
         ],
       ),
