@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:uhl_link/utils/password_functions.dart';
 
+import '../../../../utils/cloudinary_services.dart';
 import '../models/user_model.dart';
 
 class UhlUsersDB {
@@ -43,6 +44,9 @@ class UhlUsersDB {
   // create
   Future<User?> createUser(
       String name, String email, String password, String? image) async {
+    if (image != null) {
+      image = await uploadImageToNotifications(image);
+    }
     final userValues = {
       '_id': ObjectId(),
       'name': name,
