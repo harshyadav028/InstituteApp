@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/utils/functions.dart';
 import '../widgets/card.dart';
 
 class Profile extends StatefulWidget {
@@ -22,13 +21,6 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> items = [
       {
-        "text": "Update Password",
-        "icon": Icons.password_rounded,
-        "route": UhlLinkRoutesNames.updatePassword,
-        'pathParameters': {"user": jsonEncode(widget.user)},
-        "guest": false
-      },
-      {
         "text": "Achievements/PORs",
         "icon": Icons.emoji_events_rounded,
         "route": UhlLinkRoutesNames.porsPage,
@@ -39,18 +31,10 @@ class _ProfileState extends State<Profile> {
         "text": "Settings",
         "icon": Icons.settings,
         "route": UhlLinkRoutesNames.settingsPage,
-        'pathParameters': {},
-        "guest": true
-      },
-      {
-        "text": "Sign Out",
-        "icon": Icons.logout,
-        "route": UhlLinkRoutesNames.chooseAuth,
-        "pathParameters": {},
+        'pathParameters': {"user": jsonEncode(widget.user)},
         "guest": true
       },
     ];
-    final height = MediaQuery.of(context).size.height;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
     return SingleChildScrollView(
       child: Column(
@@ -76,19 +60,22 @@ class _ProfileState extends State<Profile> {
                 child: ClipRRect(
                   borderRadius:
                       BorderRadius.all(Radius.circular(aspectRatio * 90)),
-                  child: widget.isGuest
-                      ? const Icon(Icons.person, size: 30)
+                  child: (widget.isGuest || widget.user!['image'] == "")
+                      ? Icon(Icons.person,
+                          size: 30,
+                          color: Theme.of(context).colorScheme.onPrimary)
                       : CachedNetworkImage(
                           imageUrl: widget.user!['image'],
-                          fit: BoxFit.fitWidth,
+                          fit: BoxFit.cover,
                           progressIndicatorBuilder:
                               (context, string, loadingProgress) {
                             return CircularProgressIndicator(
                                 color: Theme.of(context).colorScheme.onPrimary);
                           },
                           errorWidget: (context, object, trace) {
-                            return const Icon(Icons.error_outline_outlined,
-                                size: 30);
+                            return Icon(Icons.error_outline_outlined,
+                                size: 30,
+                                color: Theme.of(context).colorScheme.onPrimary);
                           }),
                 ),
               ),

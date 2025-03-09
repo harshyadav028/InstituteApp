@@ -196,6 +196,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           }
                           return null;
                         },
+                        maxLines: 1,
                         onChanged: (String? value) {},
                         keyboardType: TextInputType.text,
                         errorText: errorNameValue,
@@ -265,6 +266,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             }
                             return null;
                           },
+                          maxLines: 1,
                           onChanged: (String? value) {
                             BlocProvider.of<AuthenticationBloc>(context)
                                 .add(GetUserByEmailEvent(email: value ?? ""));
@@ -290,6 +292,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           }
                           return null;
                         },
+                        maxLines: 1,
                         onChanged: (String? value) {},
                         keyboardType: TextInputType.text,
                         errorText: errorPasswordValue,
@@ -345,7 +348,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               otp: otp));
                     }
                   },
-                  isLoading: sendingMail,
+                  // isLoading: sendingMail,
                 ),
               ),
               if (sendingMail)
