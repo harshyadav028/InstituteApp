@@ -80,6 +80,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                         FormFieldWidget(
                           focusNode: passwordFocusNode,
                           fieldKey: passwordKey,
+                          maxLines: 1,
                           controller: passwordTextEditingController,
                           obscureText: true,
                           validator: (value) {
@@ -102,6 +103,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                           focusNode: confirmPasswordFocusNode,
                           fieldKey: confirmPasswordKey,
                           controller: confirmPasswordTextEditingController,
+                          maxLines: 1,
                           obscureText: true,
                           validator: (value) {
                             if (value!.isEmpty) {
