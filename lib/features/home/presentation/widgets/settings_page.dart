@@ -82,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            if (widget.user != null || widget.user!.isNotEmpty)
+            if (widget.user != null && widget.user!.isNotEmpty)
               CardWidget(
                   text: "Update Profile",
                   icon: CupertinoIcons.profile_circled,

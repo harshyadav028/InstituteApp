@@ -83,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
+    // final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
@@ -205,24 +205,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         hintText: "Name",
                         textInputAction: TextInputAction.next,
                       ),
-                      // SizedBox(
-                      //     height: MediaQuery.of(context).size.height * 0.03),
-                      // FormFieldWidget(
-                      //   focusNode: imageFocusNode,
-                      //   fieldKey: imageKey,
-                      //   controller: imageTextEditingController,
-                      //   obscureText: false,
-                      //   validator: (value) {
-                      //     return null;
-                      //   },
-                      //   // onChanged: (String? value) {},
-                      //   keyboardType: TextInputType.text,
-                      //   errorText: errorImageValue,
-                      //   prefixIcon: Icons.image_rounded,
-                      //   showSuffixIcon: false,
-                      //   hintText: "Profile Picture Link",
-                      //   textInputAction: TextInputAction.next,
-                      // ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03),
                       BlocListener<AuthenticationBloc, AuthenticationState>(

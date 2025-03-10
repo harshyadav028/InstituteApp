@@ -220,6 +220,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                         }
                         return null;
                       },
+                      maxLines: 1,
                       keyboardType: TextInputType.emailAddress,
                       errorText: errorHostValue,
                       prefixIcon: Icons.person,
@@ -256,6 +257,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       validator: (value) {
                         return null;
                       },
+                      maxLines: 1,
                       keyboardType: TextInputType.emailAddress,
                       errorText: errorLinkValue,
                       prefixIcon: Icons.link_rounded,

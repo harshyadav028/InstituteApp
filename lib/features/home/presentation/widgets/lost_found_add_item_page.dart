@@ -210,6 +210,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         }
                         return null;
                       },
+                      maxLines: 1,
                       keyboardType: TextInputType.emailAddress,
                       errorText: errorNameValue,
                       prefixIcon: Icons.person,
@@ -232,6 +233,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         }
                         return null;
                       },
+                      maxLines: 1,
                       keyboardType: TextInputType.phone,
                       errorText: errorContactValue,
                       prefixIcon: Icons.location_searching_rounded,
@@ -251,12 +253,13 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         }
                         return null;
                       },
-                      keyboardType: TextInputType.text,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
                       errorText: errorDescriptionValue,
                       prefixIcon: Icons.image_aspect_ratio,
                       showSuffixIcon: false,
                       hintText: "Describe Lost Item",
-                      textInputAction: TextInputAction.done,
+                      textInputAction: TextInputAction.newline,
                     ),
                     SizedBox(height: height * 0.03),
                     FormFieldWidget(

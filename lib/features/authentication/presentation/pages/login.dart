@@ -160,7 +160,8 @@ class _LoginPageState extends State<LoginPage> {
                             BlocProvider.of<AuthenticationBloc>(context)
                                 .add(GetUserByEmailEvent(email: value ?? ""));
                           },
-                          keyboardType: TextInputType.emailAddress,
+                          maxLines: 1,
+                          keyboardType: TextInputType.text,
                           errorText: errorEmailValue,
                           prefixIcon: Icons.mail_rounded,
                           showSuffixIcon: false,
