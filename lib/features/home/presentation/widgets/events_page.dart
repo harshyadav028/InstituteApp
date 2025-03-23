@@ -11,18 +11,18 @@ import 'package:uhl_link/features/home/domain/entities/feed_entity.dart';
 import 'package:uhl_link/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
 import 'package:uhl_link/features/home/presentation/widgets/feed_detail_page.dart';
 
-class AchievementsPage extends StatefulWidget {
+class EventsPage extends StatefulWidget {
   final bool isGuest;
   final Map<String, dynamic> user;
 
-  const AchievementsPage({super.key, required this.isGuest, required this.user});
+  const EventsPage({super.key, required this.isGuest, required this.user});
 
   @override
-  State<AchievementsPage> createState() => _AchievementsPageState();
+  State<EventsPage> createState() => _EventsPageState();
 }
 
-class _AchievementsPageState extends State<AchievementsPage> {
-  List<FeedItemEntity> achievementItems = []; // Renamed from feedItems
+class _EventsPageState extends State<EventsPage> {
+  List<FeedItemEntity> eventItems = []; // Renamed from feedItems
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         title: Text(
-          "Achievements",
+          "Events",
           style: Theme.of(context)
               .textTheme
               .bodyMedium!
@@ -56,16 +56,11 @@ class _AchievementsPageState extends State<AchievementsPage> {
               if (state is FeedItemsLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is FeedItemsLoaded) {
-                List<FeedItemEntity> allEvents=state.items;
-                for(int i=0;i<allEvents.length;i++)
-                  {
-                    if(allEvents[i].type.toLowerCase()=="achievement"){achievementItems.add(allEvents[i]);}
-                  }
-                // Renamed from feedItems
-                if (achievementItems.isEmpty) {
+                eventItems = state.items; // Renamed from feedItems
+                if (eventItems.isEmpty) {
                   return Center(
                     child: Text(
-                      'No achievements available',
+                      'No events available',
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                   );
@@ -73,11 +68,10 @@ class _AchievementsPageState extends State<AchievementsPage> {
                 return ListView.separated(
                   physics: const ClampingScrollPhysics(),
                   primary: true,
-                  itemCount: achievementItems.length,
+                  itemCount: eventItems.length,
                   padding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).size.height * 0.09),
                   itemBuilder: (BuildContext context, int index) {
-
                     return eventItemCard(context, index); // Renamed method
                   },
                   separatorBuilder: (BuildContext context, int index) {
@@ -87,7 +81,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
               } else if (state is FeedItemsLoadingError) {
                 return const Center(
                   child: Text(
-                    'Failed to load achievements.',
+                    'Failed to load events.',
                     style: TextStyle(color: Colors.red),
                   ),
                 );
@@ -112,7 +106,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
                 );
               },
               label: Text(
-                'Add Achievements',
+                'Add Events',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 14),
@@ -149,7 +143,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CarouselSlider(
-                  items: achievementItems[index] // Updated to eventItems
+                  items: eventItems[index] // Updated to eventItems
                       .images
                       .map((image) => ClipRRect(
                     borderRadius: BorderRadius.circular(15),
@@ -195,14 +189,14 @@ class _AchievementsPageState extends State<AchievementsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        achievementItems[index].title, // Updated to eventItems
+                        eventItems[index].title, // Updated to eventItems
                         textAlign: TextAlign.start,
                         softWrap: true,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height * 0.001),
                       Text(
-                        achievementItems[index].description.trim(), // Updated to eventItems
+                        eventItems[index].description.trim(), // Updated to eventItems
                         textAlign: TextAlign.start,
                         softWrap: true,
                         maxLines: 3,
@@ -211,7 +205,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height * 0.001),
                       Text(
-                        achievementItems[index].host, // Updated to eventItems
+                        eventItems[index].host, // Updated to eventItems
                         textAlign: TextAlign.start,
                         softWrap: true,
                         style: Theme.of(context).textTheme.labelSmall,
@@ -223,11 +217,11 @@ class _AchievementsPageState extends State<AchievementsPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => FeedDetailPage(
-                                images: achievementItems[index].images, // Updated to eventItems
-                                host: achievementItems[index].host, // Updated to eventItems
-                                description: achievementItems[index].description, // Updated to eventItems
-                                link: achievementItems[index].link, // Updated to eventItems
-                                title: achievementItems[index].title, // Updated to eventItems
+                                images: eventItems[index].images, // Updated to eventItems
+                                host: eventItems[index].host, // Updated to eventItems
+                                description: eventItems[index].description, // Updated to eventItems
+                                link: eventItems[index].link, // Updated to eventItems
+                                title: eventItems[index].title, // Updated to eventItems
                               ),
                             ),
                           );

@@ -21,8 +21,6 @@ class Dashboard extends StatefulWidget {
 
 int currentImage = 0;
 
-final List<String> carouselImages = [];
-
 class _DashboardState extends State<Dashboard> {
   List<String> carouselImages = []; // Initially empty
   bool isLoading = true;
@@ -47,12 +45,12 @@ class _DashboardState extends State<Dashboard> {
         // Filter for image files and construct raw URLs
         List<String> imageUrls = files
             .where((file) =>
-                file['type'] == 'file' &&
-                (file['name'].endsWith('.jpg') ||
-                    file['name'].endsWith('.png') ||
-                    file['name'].endsWith('.jpeg')))
+        file['type'] == 'file' &&
+            (file['name'].endsWith('.jpg') ||
+                file['name'].endsWith('.png') ||
+                file['name'].endsWith('.jpeg')))
             .map((file) =>
-                'https://raw.githubusercontent.com/KamandPrompt/InstituteApp/main/other_resources/dashboard_images/${file['name']}')
+        'https://raw.githubusercontent.com/KamandPrompt/InstituteApp/main/other_resources/dashboard_images/${file['name']}')
             .toList();
 
         setState(() {
@@ -105,7 +103,7 @@ class _DashboardState extends State<Dashboard> {
         'path': UhlLinkRoutesNames.lostFoundPage,
         'pathParameters': {
           "isGuest": jsonEncode(widget.isGuest),
-          "user": jsonEncode(widget.user)
+          "user": jsonEncode(widget.user ?? {}), // Handle null user
         }
       },
       {
@@ -129,8 +127,11 @@ class _DashboardState extends State<Dashboard> {
       {
         "title": 'Events',
         "icon": Icons.menu,
-        "path": UhlLinkRoutesNames.test,
-        'pathParameters': {}
+        "path": UhlLinkRoutesNames.events,
+        'pathParameters': {
+          "isGuest": jsonEncode(widget.isGuest),
+          "user": jsonEncode(widget.user ?? {}), // Handle null user
+        }
       },
       {
         "title": 'Mess Menu',
@@ -157,20 +158,20 @@ class _DashboardState extends State<Dashboard> {
           CarouselSlider(
               items: carouselImages
                   .map((image) => ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                color: Theme.of(context)
-                                    .cardColor
-                                    .withValues(alpha: 0.2),
-                                width: 1.5,
-                              )),
-                          child: CachedNetworkImage(
-                              imageUrl: image, fit: BoxFit.cover),
-                        ),
-                      ))
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Theme.of(context)
+                            .cardColor
+                            .withValues(alpha: 0.2),
+                        width: 1.5,
+                      )),
+                  child: CachedNetworkImage(
+                      imageUrl: image, fit: BoxFit.cover),
+                ),
+              ))
                   .toList(),
               options: CarouselOptions(
                   height: screenSize.height * 0.3,
@@ -194,7 +195,7 @@ class _DashboardState extends State<Dashboard> {
           Text(
             "Explore",
             style:
-                Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 23),
+            Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 23),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.02,

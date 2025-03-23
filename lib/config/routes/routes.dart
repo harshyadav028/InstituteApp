@@ -19,6 +19,7 @@ import 'package:uhl_link/features/home/presentation/widgets/academic_calendar_pa
 import 'package:uhl_link/features/home/presentation/widgets/achievements_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/cafeteria.dart';
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/events_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_add_item_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_page.dart';
@@ -126,6 +127,20 @@ class UhlLinkRouter {
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
+      // events
+      GoRoute(
+        name: UhlLinkRoutesNames.events, // Correct name for EventsPage
+        path: '/events/:isGuest/:user',
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            key: state.pageKey,
+            child: EventsPage(
+              isGuest: jsonDecode(state.pathParameters['isGuest']!),
+              user: jsonDecode(state.pathParameters['user']!),
+            ),
+          );
+        },
+      ),
       // Feed
       GoRoute(
           name: UhlLinkRoutesNames.feedAddItemPage,
@@ -152,13 +167,20 @@ class UhlLinkRouter {
             return MaterialPage(
                 key: state.pageKey, child: const JobPortalPage());
           }),
+      // achievements
       GoRoute(
-          name: UhlLinkRoutesNames.achievementsPage,
-          path: '/achievements',
-          pageBuilder: (context, state) {
-            return MaterialPage(
-                key: state.pageKey, child: const AchievementsPage());
-          }),
+        name: UhlLinkRoutesNames.achievementsPage, // Correct name for AchievementsPage
+        path: '/achievements/:isGuest/:user',
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            key: state.pageKey,
+            child: AchievementsPage(
+              isGuest: jsonDecode(state.pathParameters['isGuest']!),
+              user: jsonDecode(state.pathParameters['user']!),
+            ),
+          );
+        },
+      ),
 
       // Profile
       GoRoute(

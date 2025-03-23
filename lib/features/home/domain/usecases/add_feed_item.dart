@@ -13,8 +13,9 @@ class AddFeedItem {
       String description,
       FilePickerResult images,
       String link,
-      String host) {
+      String host,
+      String type) {
     return repository.addFeedItem(
-        title, description, images, link, host);
+        title, description, images, link, host,type);
   }
 }

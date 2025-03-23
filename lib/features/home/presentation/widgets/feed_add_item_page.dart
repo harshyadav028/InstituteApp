@@ -24,12 +24,22 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
   final FocusNode titleFocusNode = FocusNode();
   String? errorTitleValue;
   final GlobalKey<FormState> titleKey = GlobalKey();
-  // 
+  //
   final TextEditingController hostController = TextEditingController();
   final FocusNode hostFocusNode = FocusNode();
   String? errorHostValue;
   final GlobalKey<FormState> hostKey = GlobalKey();
-  // 
+  //
+  final TextEditingController emailIdController = TextEditingController();
+  final FocusNode emailIdFocusNode = FocusNode();
+  String? errorEmailIdValue;
+  final GlobalKey<FormState> emailIdKey = GlobalKey();
+  //
+  final TextEditingController typeController = TextEditingController();
+  final FocusNode typeFocusNode = FocusNode();
+  String? errorTypeValue;
+  final GlobalKey<FormState> typeKey = GlobalKey();
+  //
   final TextEditingController linkController = TextEditingController();
   final FocusNode linkFocusNode = FocusNode();
   String? errorLinkValue;
@@ -90,7 +100,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         title:
-            Text("Add Feeds", style: Theme.of(context).textTheme.bodyMedium),
+        Text("Add Feeds", style: Theme.of(context).textTheme.bodyMedium),
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: true,
@@ -135,7 +145,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
             children: [
               SingleChildScrollView(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 physics: const ClampingScrollPhysics(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -152,7 +162,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
+                          const BorderRadius.all(Radius.circular(12)),
                           border: Border.all(
                               color: Theme.of(context).colorScheme.scrim,
                               width: 1.5),
@@ -160,30 +170,30 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                         child: Center(
                           child: ClipRRect(
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
+                            const BorderRadius.all(Radius.circular(12)),
                             child: (picker == null || picker!.files.isEmpty)
                                 ? Icon(
-                                    Icons.image_rounded,
-                                    color: Theme.of(context).colorScheme.scrim,
-                                    size: aspectRatio * 150,
-                                  )
+                              Icons.image_rounded,
+                              color: Theme.of(context).colorScheme.scrim,
+                              size: aspectRatio * 150,
+                            )
                                 : SizedBox(
-                                    width: width - 40,
-                                    height: height * 0.3,
-                                    child: GridView.builder(
-                                        itemCount: picker!.files.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Image.file(
-                                            File(picker!.files[index].path!),
-                                            fit: BoxFit.cover,
-                                            alignment: Alignment.center,
-                                          );
-                                        }),
-                                  ),
+                              width: width - 40,
+                              height: height * 0.3,
+                              child: GridView.builder(
+                                  itemCount: picker!.files.length,
+                                  gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Image.file(
+                                      File(picker!.files[index].path!),
+                                      fit: BoxFit.cover,
+                                      alignment: Alignment.center,
+                                    );
+                                  }),
+                            ),
                           ),
                         ),
                       ),
@@ -223,6 +233,40 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       prefixIcon: Icons.person,
                       showSuffixIcon: false,
                       hintText: "Enter host (Club/School)",
+                      textInputAction: TextInputAction.next,
+                    ),
+                    SizedBox(height: height * 0.02),
+                    FormFieldWidget(
+                      focusNode: emailIdFocusNode,
+                      fieldKey: emailIdKey,
+                      controller: emailIdController,
+                      obscureText: false,
+                      validator: (value) {
+                        return null;
+                      },
+                      maxLines: 1,
+                      keyboardType: TextInputType.emailAddress,
+                      errorText: errorEmailIdValue,
+                      prefixIcon: Icons.email,
+                      showSuffixIcon: false,
+                      hintText: "Enter email Id",
+                      textInputAction: TextInputAction.next,
+                    ),
+                    SizedBox(height: height * 0.02),
+                    FormFieldWidget(
+                      focusNode: typeFocusNode,
+                      fieldKey: typeKey,
+                      controller: typeController,
+                      obscureText: false,
+                      validator: (value) {
+                        return null;
+                      },
+                      maxLines: 1,
+                      keyboardType: TextInputType.emailAddress,
+                      errorText: errorTypeValue,
+                      prefixIcon: Icons.event,
+                      showSuffixIcon: false,
+                      hintText: "Enter type(Event/Achievement)",
                       textInputAction: TextInputAction.next,
                     ),
                     SizedBox(height: height * 0.02),
@@ -274,19 +318,19 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       text: "Add Feed",
                       buttonFunc: () {
                         final bool isTitleValid =
-                            titleKey.currentState!.validate();
+                        titleKey.currentState!.validate();
                         final bool isHostValid =
-                            hostKey.currentState!.validate();
+                        hostKey.currentState!.validate();
                         final bool isLinkValid =
-                            linkKey.currentState!.validate();
+                        linkKey.currentState!.validate();
                         final bool isDescriptionValid =
-                            descriptionKey.currentState!.validate();
+                        descriptionKey.currentState!.validate();
 
                         if (picker == null || picker!.files.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("Please Upload Images",
                                   style:
-                                      Theme.of(context).textTheme.labelSmall),
+                                  Theme.of(context).textTheme.labelSmall),
                               backgroundColor: Theme.of(context).cardColor));
                         }
 
@@ -301,6 +345,7 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                             description: descriptionController.text,
                             link: linkController.text,
                             images: picker!,
+                            type:typeController.text
                           ));
                         }
                       },
