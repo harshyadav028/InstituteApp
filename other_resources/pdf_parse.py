@@ -22,11 +22,11 @@ df = pd.DataFrame(data)
 
 # print("Executing..")
 #creating dict
-menu={
+menu = {
     "Breakfast":{},
     "Lunch":{},
     "Dinner":{},
-    "Snacks":{},    
+    # "Snacks":{},    
 }
 
 for i in range(1,8):
@@ -39,11 +39,11 @@ for i in range(1,8):
     dict={df.iloc[1,i]:list(df.iloc[15:23,i])}
     # print(dict)
     menu["Lunch"].update(dict)
-for i in range(1,8):
-    # print(i,df.iloc[1,i])
-    dict={df.iloc[1,i]:list(df.iloc[24:26,i])}
-    # print(dict)
-    menu["Snacks"].update(dict)
+# for i in range(1,8):
+#     # print(i,df.iloc[1,i])
+#     dict={df.iloc[1,i]:list(df.iloc[24:26,i])}
+#     # print(dict)
+#     menu["Snacks"].update(dict)
 for i in range(1,8):
     # print(i,df.iloc[1,i])
     dict={df.iloc[1,i]:list(df.iloc[27:35,i])}
@@ -64,6 +64,6 @@ for meal_type, days in menu.items():
 print(json.dumps(mess, indent=4))
 
 # Save the new format dictionary to a new JSON file
-with open('/home/friday_code/Desktop/White Rebels/ans.json', 'w') as file:
+with open('ans.json', 'w') as file:
     json.dump(mess, file, indent=4)
     file.truncate()
