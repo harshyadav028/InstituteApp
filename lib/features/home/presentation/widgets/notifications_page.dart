@@ -124,7 +124,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
       ),
       floatingActionButton:
-          (widget.user != null && isAdmin(widget.user!['email']))
+          (!widget.isGuest && widget.user != null && isAdmin(widget.user!['email']))
               ? FloatingActionButton(
                   onPressed: () {
                     GoRouter.of(context).pushNamed(

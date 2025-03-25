@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +18,7 @@ class Constants {
   static Color cardDark = const Color(0xFF212121);
   static Color errorDark = const Color(0xFFE55D59);
 
-  static Map<String, Map<String, List<String>>> mess_menu = {
+  static Map<String, Map<String, List<String>>> messMenu = {
     "Monday": {
       "Breakfast": [
         "Aloo onion paratha",

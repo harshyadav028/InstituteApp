@@ -34,6 +34,6 @@ class JobPortalDB {
   // Close Connection
   Future<void> close() async {
     await db?.close();
-    print('Connection to MongoDB closed');
+    // print('Connection to MongoDB closed');
   }
 }

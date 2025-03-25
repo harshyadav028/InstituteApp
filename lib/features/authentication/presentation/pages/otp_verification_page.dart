@@ -13,9 +13,9 @@ import '../../../../widgets/screen_width_button.dart';
 import '../bloc/user_bloc.dart';
 
 class OtpVerificationPage extends StatefulWidget {
-  Map<String, dynamic> user;
-  int otp;
-  OtpVerificationPage({super.key, required this.user, required this.otp});
+  final Map<String, dynamic> user;
+  final int otp;
+  const OtpVerificationPage({super.key, required this.user, required this.otp});
 
   @override
   State<OtpVerificationPage> createState() => _OtpVerificationPageState();

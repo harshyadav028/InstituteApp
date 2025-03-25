@@ -198,7 +198,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
                     FormFieldWidget(
                       focusNode: nameFocusNode,
                       fieldKey: nameKey,
@@ -218,7 +218,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       hintText: "Enter your Name",
                       textInputAction: TextInputAction.next,
                     ),
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
                     FormFieldWidget(
                       focusNode: contactFocusNode,
                       fieldKey: contactKey,
@@ -241,7 +241,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       hintText: "Enter your Contact No.",
                       textInputAction: TextInputAction.next,
                     ),
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
                     FormFieldWidget(
                       focusNode: descriptionFocusNode,
                       fieldKey: descriptionKey,
@@ -261,7 +261,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       hintText: "Describe Lost Item",
                       textInputAction: TextInputAction.newline,
                     ),
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
                     FormFieldWidget(
                       focusNode: dateFocusNode,
                       fieldKey: dateKey,
@@ -294,7 +294,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       hintText: "Enter Date of Lost/Found",
                       textInputAction: TextInputAction.done,
                     ),
-                    SizedBox(height: height * 0.03),
+                    SizedBox(height: height * 0.02),
                     FormField<String>(builder: (FormFieldState<String> state) {
                       return InputDecorator(
                         decoration: InputDecoration(
