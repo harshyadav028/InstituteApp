@@ -111,8 +111,11 @@ class _DashboardState extends State<Dashboard> {
       {
         "title": 'Buy/Sell',
         "icon": Icons.shopping_cart_outlined,
-        "path": UhlLinkRoutesNames.test,
-        'pathParameters': {}
+        "path": UhlLinkRoutesNames.buySellPage,
+        'pathParameters': {
+          "isGuest": jsonEncode(widget.isGuest),
+          "user": jsonEncode(widget.user)
+        }
       },
       {
         "title": 'Maps',

@@ -9,14 +9,19 @@ import 'package:uhl_link/features/authentication/data/data_sources/user_data_sou
 import 'package:uhl_link/features/authentication/domain/usecases/get_user_by_email.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/signup_user.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/update_password.dart';
+import 'package:uhl_link/features/home/data/data_sources/buy_sell_data_sources.dart';
+import 'package:uhl_link/features/home/data/repository_implementations/buy_sell_repository_impl.dart';
+import 'package:uhl_link/features/home/domain/usecases/add_buy_sell_items.dart';
 import 'package:uhl_link/features/authentication/domain/usecases/update_profile.dart';
 import 'package:uhl_link/features/home/domain/usecases/add_lost_found_item.dart';
 import 'package:uhl_link/features/home/domain/usecases/add_notification.dart';
+import 'package:uhl_link/features/home/domain/usecases/get_buy_sell_items.dart';
 import 'package:uhl_link/features/home/domain/usecases/get_lost_found_items.dart';
 import 'package:uhl_link/features/home/domain/usecases/get_notification.dart';
+import 'package:uhl_link/features/home/presentation/bloc/buy_sell_bloc/bns_bloc.dart';
+import 'package:uhl_link/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
 import 'package:uhl_link/utils/theme.dart';
 import 'package:uhl_link/features/home/data/data_sources/feed_portal_data_sources.dart';
-import 'package:uhl_link/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
 
 import 'package:uhl_link/features/home/data/data_sources/notification_data_sources.dart';
 import 'package:uhl_link/features/home/data/repository_implementations/notification_repository_impl.dart';
@@ -41,6 +46,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   const storage = FlutterSecureStorage();
   final GoRouter router = UhlLinkRouter().router;
+  await func();
   runApp(BlocProvider<ThemeBloc>(
     create: (context) => ThemeBloc(storage: storage)..loadSavedTheme(),
     child: UhlLink(router: router),
@@ -52,6 +58,7 @@ Future<void> func() async {
   await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await BuySellDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await NotificationsDB.connect(dotenv.env['DB_CONNECTION_URL']!);
   await FeedDB.connect(dotenv.env['DB_CONNECTION_URL']!);
 }
@@ -64,7 +71,6 @@ class UhlLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    func();
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<SignUpUser>(
@@ -91,6 +97,10 @@ class UhlLink extends StatelessWidget {
             create: (_) => GetFeedItem(FeedRepositoryImpl(FeedDB()))),
         RepositoryProvider<AddFeedItem>(
             create: (_) => AddFeedItem(FeedRepositoryImpl(FeedDB()))),
+        RepositoryProvider<GetBuySellItems>(
+            create: (_) => GetBuySellItems(BuySellRepositoryImpl(BuySellDB()))),
+        RepositoryProvider<AddBuySellItem>(
+            create: (_) => AddBuySellItem(BuySellRepositoryImpl(BuySellDB()))),
         RepositoryProvider<GetNotifications>(
             create: (_) => GetNotifications(
                 NotificationRepositoryImpl(NotificationsDB()))),
@@ -109,7 +119,8 @@ class UhlLink extends StatelessWidget {
                       GetUserByEmail(UserRepositoryImpl(UhlUsersDB())),
                   signUpUser: SignUpUser(UserRepositoryImpl(UhlUsersDB())),
                   sendOTP: SendOTP(UserRepositoryImpl(UhlUsersDB())),
-                  updateProfile: UpdateProfile(UserRepositoryImpl(UhlUsersDB())))),
+                  updateProfile:
+                      UpdateProfile(UserRepositoryImpl(UhlUsersDB())))),
           BlocProvider<JobPortalBloc>(
               create: (context) => JobPortalBloc(
                     getJobs: GetJobs(JobPortalRepositoryImpl(JobPortalDB())),
@@ -120,6 +131,12 @@ class UhlLink extends StatelessWidget {
                       GetLostFoundItems(LostFoundRepositoryImpl(LostFoundDB())),
                   addLostFoundItem: AddLostFoundItem(
                       LostFoundRepositoryImpl(LostFoundDB())))),
+          BlocProvider<BuySellBloc>(
+              create: (context) => BuySellBloc(
+                  getBuySellItems:
+                      GetBuySellItems(BuySellRepositoryImpl(BuySellDB())),
+                  addBuySellItem:
+                      AddBuySellItem(BuySellRepositoryImpl(BuySellDB())))),
           BlocProvider<FeedBloc>(
               create: (context) => FeedBloc(
                   getFeedItems: GetFeedItem(FeedRepositoryImpl(FeedDB())),
@@ -130,7 +147,6 @@ class UhlLink extends StatelessWidget {
                       NotificationRepositoryImpl(NotificationsDB())),
                   addNotification: AddNotification(
                       NotificationRepositoryImpl(NotificationsDB())))
-              // Fetch notifications on startup
               ),
         ],
         child: BlocBuilder<ThemeBloc, ThemeState>(

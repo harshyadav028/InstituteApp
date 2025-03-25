@@ -23,6 +23,9 @@ class UhlLinkRoutesNames {
   static const String quickLinksPage = 'quick_links_page';
   static const String lostFoundPage = 'lost_found_Page';
   static const String lostFoundAddItemPage = 'lost_found_add_item_page';
+  static const String buySellPage = 'buy_sell_page';
+  static const String buySellAddItemPage = 'buy_sell_add_item_page';
+
   static const String feedAddItemPage = 'feed_add_item_page';
   static const String feedDetailPage = 'feed_detail_page';
   // Academics
