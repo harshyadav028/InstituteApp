@@ -12,6 +12,7 @@ class UhlLinkRoutesNames {
   static const String home = 'home';
 
   static const String notifications = 'notifications';
+  static const String notificationDetails = 'notification_details_page';
   static const String addNotification = 'add_notifications';
 
 

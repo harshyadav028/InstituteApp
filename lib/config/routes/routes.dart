@@ -23,6 +23,7 @@ import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dar
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_add_item_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/mess_menu_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/notification_details_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/quick_links_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/settings_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/notifications_page.dart';
@@ -210,6 +211,16 @@ class UhlLinkRouter {
                 child: NotificationsPage(
                   isGuest: jsonDecode(state.pathParameters["isGuest"]!),
                   user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
+      GoRoute(
+          name: UhlLinkRoutesNames.notificationDetails,
+          path: '/notification_details/:notification',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: NotificationDetailsPage(
+                  notificationMap: jsonDecode(state.pathParameters['notification']!),
                 ));
           }),
       GoRoute(

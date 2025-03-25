@@ -2,21 +2,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uhl_link/features/authentication/data/models/user_model.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
-import 'package:uhl_link/features/home/domain/entities/notifications_entity.dart';
 import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_bloc.dart';
 import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_event.dart';
 import 'package:uhl_link/features/home/presentation/bloc/notification_bloc/notification_state.dart';
 import 'package:uhl_link/utils/env_utils.dart';
-import 'package:uhl_link/config/routes/routes_consts.dart';
-
 
 class NotificationsPage extends StatefulWidget {
   final bool isGuest;
   final Map<String, dynamic>? user;
 
-  const NotificationsPage({super.key, required this.isGuest, required this.user});
+  const NotificationsPage(
+      {super.key, required this.isGuest, required this.user});
 
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
@@ -26,7 +23,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<NotificationBloc>(context).add(const GetNotificationsEvent());
+    BlocProvider.of<NotificationBloc>(context)
+        .add(const GetNotificationsEvent());
   }
 
   @override
@@ -42,7 +40,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: BlocBuilder<NotificationBloc, NotificationState>(
             builder: (context, state) {
               if (state is NotificationsLoading) {
@@ -58,18 +56,18 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   );
                 }
                 return ListView.separated(
+                  physics: const ClampingScrollPhysics(),
                   itemCount: notifications.length,
-                  itemBuilder: (context, index) {
+                  itemBuilder: (BuildContext context, int index) {
                     final notification = notifications[index];
                     return GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NotificationDetailPage(
-                            notification: notification,
-                          ),
-                        ),
-                      ),
+                      onTap: () {
+                        GoRouter.of(context).pushNamed(
+                            UhlLinkRoutesNames.notificationDetails,
+                            pathParameters: {
+                              "notification": jsonEncode(notification.toMap())
+                            });
+                      },
                       child: Card(
                         color: Theme.of(context).cardColor,
                         elevation: 2,
@@ -77,18 +75,25 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.all(12),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 notification.title,
-                                style: Theme.of(context).textTheme.bodyMedium,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(fontWeight: FontWeight.w600),
                               ),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 3),
                               Text(
                                 " ${notification.by}",
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .copyWith(fontSize: 15),
                               ),
                             ],
                           ),
@@ -96,8 +101,21 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => const SizedBox(height: 10),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 10),
                 );
+              } else if (state is NotificationsError) {
+                return Center(
+                  child: Text(
+                    "Error loading notifications: ${state.message}",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                );
+              } else if (state is NotificationAdded ||
+                  state is NotificationAddingError) {
+                BlocProvider.of<NotificationBloc>(context)
+                    .add(const GetNotificationsEvent());
+                return CircularProgressIndicator();
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
@@ -105,78 +123,19 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ),
       ),
-      floatingActionButton: (widget.user != null && isAdmin(widget.user!['email']))
-          ? FloatingActionButton(
-        onPressed: () {
-          GoRouter.of(context).pushNamed(UhlLinkRoutesNames.addNotification,   pathParameters: {
-            "user": jsonEncode(widget.user ?? {}) // ✅ Ensure 'user' is passed
-          },);
-        },
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        child: const Icon(Icons.add),
-      )
-          : null,
-
-    );
-  }
-}
-
-class NotificationDetailPage extends StatelessWidget {
-  final NotificationEntity notification;
-
-  const NotificationDetailPage({super.key, required this.notification});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          notification.title,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView( // Prevent overflow
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "By: ${notification.by}",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: const SizedBox(height: 10),
-              ),
-              if (notification.image != null && notification.image!.isNotEmpty)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    notification.image!,
-                    errorBuilder: (context, error, stackTrace) => const Icon(
-                      Icons.broken_image,
-                      size: 50,
-                    ),
-                  ),
-                ),
-              const SizedBox(height: 10),
-              Text(
-                notification.description,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
-      ),
+      floatingActionButton:
+          (widget.user != null && isAdmin(widget.user!['email']))
+              ? FloatingActionButton(
+                  onPressed: () {
+                    GoRouter.of(context).pushNamed(
+                      UhlLinkRoutesNames.addNotification,
+                      pathParameters: {"user": jsonEncode(widget.user)},
+                    );
+                  },
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  child: const Icon(Icons.add),
+                )
+              : null,
     );
   }
 }
