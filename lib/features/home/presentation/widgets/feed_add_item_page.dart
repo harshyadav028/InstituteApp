@@ -200,6 +200,22 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                     ),
                     SizedBox(height: height * 0.02),
                     FormFieldWidget(
+                      focusNode: emailIdFocusNode, // Still useful for focus management, though optional here
+                      fieldKey: emailIdKey,
+                      controller: emailIdController..text = widget.user['email'], // Hardcoded text
+                      obscureText: false, // No need to obscure since it’s just display
+                      validator: (value) => null, // No validation needed for read-only
+                      maxLines: 1,
+                      keyboardType: TextInputType.none, // Prevents keyboard from showing
+                      errorText: null, // No error since it’s not editable
+                      prefixIcon: Icons.email, // Optional, kept for consistency
+                      showSuffixIcon: false, // No suffix icon needed
+                      hintText: "Email ID", // Updated hint to indicate it’s read-only
+                      textInputAction: TextInputAction.none, // No action since it’s not editable
+                      readOnly: true, // Makes the field uneditable
+                    ),
+                    SizedBox(height: height * 0.02),
+                    FormFieldWidget(
                       focusNode: titleFocusNode,
                       fieldKey: titleKey,
                       controller: titleController,
@@ -233,23 +249,6 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                       prefixIcon: Icons.person,
                       showSuffixIcon: false,
                       hintText: "Enter host (Club/School)",
-                      textInputAction: TextInputAction.next,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    FormFieldWidget(
-                      focusNode: emailIdFocusNode,
-                      fieldKey: emailIdKey,
-                      controller: emailIdController,
-                      obscureText: false,
-                      validator: (value) {
-                        return null;
-                      },
-                      maxLines: 1,
-                      keyboardType: TextInputType.emailAddress,
-                      errorText: errorEmailIdValue,
-                      prefixIcon: Icons.email,
-                      showSuffixIcon: false,
-                      hintText: "Enter email Id",
                       textInputAction: TextInputAction.next,
                     ),
                     SizedBox(height: height * 0.02),
