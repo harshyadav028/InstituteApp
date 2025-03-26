@@ -61,10 +61,10 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          AboutJobWidget(context, "Job Type", currentJob.type),
-                          AboutJobWidget(
+                          aboutJobWidget(context, "Job Type", currentJob.type),
+                          aboutJobWidget(
                               context, "Location", currentJob.location),
-                          AboutJobWidget(
+                          aboutJobWidget(
                               context, "Stipend", currentJob.stipend),
                           //add stipend
                         ],
@@ -94,7 +94,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                               },
                             ),
                           ),
-                          AboutJobWidget(
+                          aboutJobWidget(
                               context, "Duration", currentJob.duration),
                         ],
                       ),
@@ -309,7 +309,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
   }
 }
 
-Widget AboutJobWidget(BuildContext context, String heading, String value) {
+Widget aboutJobWidget(BuildContext context, String heading, String value) {
   return Container(
     width: (MediaQuery.of(context).size.width - 60) / 2,
     height: MediaQuery.of(context).size.height * 0.065,

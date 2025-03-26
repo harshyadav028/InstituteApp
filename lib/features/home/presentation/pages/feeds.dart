@@ -4,12 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
 import 'package:uhl_link/features/home/domain/entities/feed_entity.dart';
 import 'package:uhl_link/features/home/presentation/bloc/feed_page_bloc/feed_bloc.dart';
 import 'package:uhl_link/features/home/presentation/widgets/feed_detail_page.dart';
+import 'package:uhl_link/utils/env_utils.dart';
 
 class FeedPage extends StatefulWidget {
   final bool isGuest;
@@ -32,8 +32,6 @@ class _FeedPageState extends State<FeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    String porsString = dotenv.env["POR_EMAILS"] ?? "";
-    List<String> pors = porsString.split(',');
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
@@ -76,7 +74,7 @@ class _FeedPageState extends State<FeedPage> {
             }
           },
         ),
-        !widget.isGuest && pors.contains(widget.user!["email"])
+        (!widget.isGuest && widget.user != null && isAdmin(widget.user!["email"]))
             ? Positioned(
                 right: 0,
                 bottom: 0,

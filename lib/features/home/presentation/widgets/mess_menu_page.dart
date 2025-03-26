@@ -11,7 +11,7 @@ class MessMenuPage extends StatefulWidget {
 class _MessMenuPageState extends State<MessMenuPage> {
   @override
   Widget build(BuildContext context) {
-    Map<String, Map<String, List<String>>> messMenu = Constants.mess_menu;
+    Map<String, Map<String, List<String>>> messMenu = Constants.messMenu;
     List<String> keys = messMenu.keys.toList();
     return Scaffold(
       appBar: AppBar(

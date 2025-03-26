@@ -1,6 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uhl_link/features/home/domain/entities/notifications_entity.dart';
-import 'package:uhl_link/features/home/domain/repositories/notification_repository.dart';
 import '../../../domain/usecases/add_notification.dart';
 import '../../../domain/usecases/get_notification.dart';
 import 'notification_event.dart';

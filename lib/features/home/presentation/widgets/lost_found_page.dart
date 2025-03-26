@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
 import 'package:uhl_link/features/home/domain/entities/lost_found_item_entity.dart';
 import 'package:uhl_link/features/home/presentation/bloc/lost_found_bloc/lnf_bloc.dart';
@@ -59,13 +59,21 @@ class _LostFoundPageState extends State<LostFoundPage> {
         ),
         resizeToAvoidBottomInset: false,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: BlocBuilder<LnfBloc, LnfState>(
             builder: (context, state) {
               if (state is LnfItemsLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is LnfItemsLoaded) {
                 lnfItems = state.items;
+                if (lnfItems.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "No items found",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  );
+                }
                 return ListView.separated(
                   physics: const ClampingScrollPhysics(),
                   primary: true,
@@ -90,50 +98,63 @@ class _LostFoundPageState extends State<LostFoundPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                CarouselSlider(
-                                    items: lnfItems[index]
-                                        .images
-                                        .map((image) => ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                    border: Border.all(
-                                                      color: Theme.of(context)
-                                                          .cardColor
-                                                          .withValues(
-                                                              alpha: 0.2),
-                                                      width: 1.5,
-                                                    )),
-                                                child: Image.network(image,
-                                                    height:
-                                                        MediaQuery.of(context)
+                                lnfItems[index].images.isNotEmpty
+                                    ? CarouselSlider(
+                                        items: lnfItems[index]
+                                            .images
+                                            .map((image) => ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        border: Border.all(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .cardColor
+                                                                  .withValues(
+                                                                      alpha:
+                                                                          0.2),
+                                                          width: 1.5,
+                                                        )),
+                                                    child: CachedNetworkImage(
+                                                        imageUrl: image,
+                                                        height: MediaQuery.of(
+                                                                    context)
                                                                 .size
                                                                 .height *
-                                                            0.25, errorBuilder:
-                                                        (context, object,
+                                                            0.25,
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            Center(
+                                                                child:
+                                                                    CircularProgressIndicator()),
+                                                        errorWidget: (context,
+                                                            object,
                                                             stacktrace) {
-                                                  return Icon(
-                                                      Icons
-                                                          .error_outline_rounded,
-                                                      size: 40,
-                                                      color: Theme.of(context)
-                                                          .primaryColor);
-                                                }, fit: BoxFit.cover),
-                                              ),
-                                            ))
-                                        .toList(),
-                                    options: CarouselOptions(
-                                        height: screenSize.height * 0.3,
-                                        autoPlay: true,
-                                        aspectRatio: 16 / 9,
-                                        viewportFraction: 1,
-                                        autoPlayInterval:
-                                            const Duration(seconds: 5),
-                                        enlargeCenterPage: true)),
+                                                          return Icon(
+                                                              Icons
+                                                                  .error_outline_rounded,
+                                                              size: 40,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor);
+                                                        },
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                ))
+                                            .toList(),
+                                        options: CarouselOptions(
+                                            height: screenSize.height * 0.3,
+                                            autoPlay: true,
+                                            aspectRatio: 16 / 9,
+                                            viewportFraction: 1,
+                                            autoPlayInterval:
+                                                const Duration(seconds: 5),
+                                            enlargeCenterPage: true))
+                                    : Container(),
                                 SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.02,
@@ -170,7 +191,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
                                                   .height *
                                               0.01),
                                       Text(
-                                          "Date : ${lnfItems[index].date.toLocal()}",
+                                          "Date : ${DateFormat.yMMMMd().format(lnfItems[index].date)}",
                                           textAlign: TextAlign.start,
                                           softWrap: true,
                                           style: Theme.of(context)

@@ -8,17 +8,17 @@ import 'package:uhl_link/features/authentication/domain/entities/user_entity.dar
 
 import '../../../../widgets/form_field_widget.dart';
 import '../../../../widgets/screen_width_button.dart';
-import '../bloc/lost_found_bloc/lnf_bloc.dart';
+import '../bloc/buy_sell_bloc/bns_bloc.dart';
 
-class LostFoundAddItemPage extends StatefulWidget {
+class BuySellAddItemPage extends StatefulWidget {
   final Map<String, dynamic> user;
-  const LostFoundAddItemPage({super.key, required this.user});
+  const BuySellAddItemPage({super.key, required this.user});
 
   @override
-  State<LostFoundAddItemPage> createState() => _LostFoundAddItemPageState();
+  State<BuySellAddItemPage> createState() => _BuySellAddItemPageState();
 }
 
-class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
+class _BuySellAddItemPageState extends State<BuySellAddItemPage> {
   bool imageSelected = false;
 
   //
@@ -33,6 +33,16 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
   String? errorContactValue;
   final GlobalKey<FormState> contactKey = GlobalKey();
 
+  //
+  final TextEditingController maxPriceController = TextEditingController();
+  final FocusNode maxPriceFocusNode = FocusNode();
+  String? errorMaxPriceValue;
+  final GlobalKey<FormState> maxPriceKey = GlobalKey();
+  //
+  final TextEditingController minPriceController = TextEditingController();
+  final FocusNode minPriceFocusNode = FocusNode();
+  String? errorMinPriceValue;
+  final GlobalKey<FormState> minPriceKey = GlobalKey();
   //
   final TextEditingController dateController = TextEditingController();
   final FocusNode dateFocusNode = FocusNode();
@@ -74,8 +84,8 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
 
   bool itemAdding = false;
 
-  String? itemStatus;
-  List<String> lostOrFound = ["Lost", "Found"];
+  // String? itemStatus;
+  // List<String> lostOrFound = ["Lost", "Found"];
 
   @override
   void dispose() {
@@ -99,14 +109,13 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
-        title: Text("Add Lost Item",
-            style: Theme.of(context).textTheme.bodyMedium),
+        title: Text("Add Items", style: Theme.of(context).textTheme.bodyMedium),
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: true,
-      body: BlocListener<LnfBloc, LnfState>(
+      body: BlocListener<BuySellBloc, BuySellState>(
         listener: (context, state) {
-          if (state is LnfAddingItem) {
+          if (state is BuySellAddingItem) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text("Adding Item...",
                     style: Theme.of(context).textTheme.labelSmall),
@@ -114,7 +123,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
             setState(() {
               itemAdding = true;
             });
-          } else if (state is LnfItemAdded) {
+          } else if (state is BuySellItemAdded) {
             setState(() {
               itemAdding = false;
             });
@@ -123,7 +132,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                     style: Theme.of(context).textTheme.labelSmall),
                 backgroundColor: Theme.of(context).cardColor));
             GoRouter.of(context).pop();
-          } else if (state is LnfItemsAddingError) {
+          } else if (state is BuySellItemsAddingError) {
             setState(() {
               itemAdding = false;
             });
@@ -198,7 +207,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: height * 0.02),
+                    SizedBox(height: height * 0.03),
                     FormFieldWidget(
                       focusNode: nameFocusNode,
                       fieldKey: nameKey,
@@ -210,7 +219,6 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         }
                         return null;
                       },
-                      maxLines: 1,
                       keyboardType: TextInputType.emailAddress,
                       errorText: errorNameValue,
                       prefixIcon: Icons.person,
@@ -218,7 +226,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       hintText: "Enter your Name",
                       textInputAction: TextInputAction.next,
                     ),
-                    SizedBox(height: height * 0.02),
+                    SizedBox(height: height * 0.03),
                     FormFieldWidget(
                       focusNode: contactFocusNode,
                       fieldKey: contactKey,
@@ -233,7 +241,6 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         }
                         return null;
                       },
-                      maxLines: 1,
                       keyboardType: TextInputType.phone,
                       errorText: errorContactValue,
                       prefixIcon: Icons.location_searching_rounded,
@@ -241,7 +248,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       hintText: "Enter your Contact No.",
                       textInputAction: TextInputAction.next,
                     ),
-                    SizedBox(height: height * 0.02),
+                    SizedBox(height: height * 0.03),
                     FormFieldWidget(
                       focusNode: descriptionFocusNode,
                       fieldKey: descriptionKey,
@@ -253,15 +260,15 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                         }
                         return null;
                       },
-                      maxLines: null,
-                      keyboardType: TextInputType.multiline,
+                      keyboardType: TextInputType.text,
                       errorText: errorDescriptionValue,
                       prefixIcon: Icons.image_aspect_ratio,
                       showSuffixIcon: false,
-                      hintText: "Describe Lost Item",
-                      textInputAction: TextInputAction.newline,
+                      hintText: "Describe Selling Item",
+                      textInputAction: TextInputAction.done,
+                      maxLines: 0,
                     ),
-                    SizedBox(height: height * 0.02),
+                    SizedBox(height: height * 0.03),
                     FormFieldWidget(
                       focusNode: dateFocusNode,
                       fieldKey: dateKey,
@@ -269,7 +276,7 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       obscureText: false,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Lost Date is required";
+                          return "Date is required";
                         }
                         return null;
                       },
@@ -291,65 +298,50 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                       errorText: errorDateValue,
                       prefixIcon: Icons.date_range_rounded,
                       showSuffixIcon: false,
-                      hintText: "Enter Date of Lost/Found",
+                      hintText: "Enter Date",
                       textInputAction: TextInputAction.done,
                     ),
-                    SizedBox(height: height * 0.02),
-                    FormField<String>(builder: (FormFieldState<String> state) {
-                      return InputDecorator(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 15),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.scrim,
-                                  width: 1),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              gapPadding: 24),
-                          fillColor: Theme.of(context).cardColor,
-                          filled: true,
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              gapPadding: 24),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: itemStatus,
-                            isDense: true,
-                            hint: Text(
-                              "Lost/Found",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.scrim),
-                            ),
-                            dropdownColor: Theme.of(context).cardColor,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                itemStatus = newValue;
-                              });
-                            },
-                            items: lostOrFound.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      );
-                    }),
-                    SizedBox(height: height * 0.1),
+                    SizedBox(height: height * 0.03),
+                    FormFieldWidget(
+                      focusNode: maxPriceFocusNode,
+                      fieldKey: maxPriceKey,
+                      controller: maxPriceController,
+                      obscureText: false,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Max Price is required.';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                      errorText: errorMaxPriceValue,
+                      prefixIcon: Icons.currency_rupee_rounded,
+                      showSuffixIcon: false,
+                      hintText: "Enter Maximum Price of Product",
+                      textInputAction: TextInputAction.next,
+                      maxLines: 1,
+                    ),
+                    SizedBox(height: height * 0.03),
+                    FormFieldWidget(
+                      focusNode: minPriceFocusNode,
+                      fieldKey: minPriceKey,
+                      controller: minPriceController,
+                      obscureText: false,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Minimum Price is required.';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                      errorText: errorMinPriceValue,
+                      prefixIcon: Icons.currency_rupee_rounded,
+                      showSuffixIcon: false,
+                      hintText: "Enter Minimum Price of Product",
+                      textInputAction: TextInputAction.next,
+                      maxLines: 1,
+                    ),
+                    SizedBox(height: height * 0.03),
                   ],
                 ),
               ),
@@ -360,24 +352,27 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                     child: ScreenWidthButton(
                       text: "Add Item",
                       buttonFunc: () {
-                        final bool isNameValid = nameKey.currentState!.validate();
+                        final bool isNameValid =
+                            nameKey.currentState!.validate();
                         final bool isContactValid =
                             contactKey.currentState!.validate();
                         final bool isDescriptionValid =
                             descriptionKey.currentState!.validate();
-                        final bool isDateValid = dateKey.currentState!.validate();
+                        final bool isDateValid =
+                            dateKey.currentState!.validate();
 
-                        if (itemStatus == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Please Select Lost or Found",
-                                  style: Theme.of(context).textTheme.labelSmall),
-                              backgroundColor: Theme.of(context).cardColor));
-                        }
+                        // if (itemStatus == null) {
+                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //       content: Text("Please Select Lost or Found",
+                        //           style: Theme.of(context).textTheme.labelSmall),
+                        //       backgroundColor: Theme.of(context).cardColor));
+                        // }
 
                         if (picker == null || picker!.files.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("Please Upload Images",
-                                  style: Theme.of(context).textTheme.labelSmall),
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall),
                               backgroundColor: Theme.of(context).cardColor));
                         }
 
@@ -385,17 +380,17 @@ class _LostFoundAddItemPageState extends State<LostFoundAddItemPage> {
                             isDateValid &&
                             isContactValid &&
                             isDescriptionValid &&
-                            itemStatus != null &&
                             picker != null) {
-                          BlocProvider.of<LnfBloc>(context)
-                              .add(AddLostFoundItemEvent(
-                            name: nameController.text,
+                          BlocProvider.of<BuySellBloc>(context)
+                              .add(AddBuySellItemEvent(
+                            productName: nameController.text,
                             phoneNo: contactController.text,
-                            description: descriptionController.text,
-                            date: DateTime.parse(dateController.text),
-                            lostOrFound: itemStatus!,
-                            from: user.email,
-                            images: picker!,
+                            productDescription: descriptionController.text,
+                            addDate: DateTime.parse(dateController.text),
+                            soldBy: user.email,
+                            maxPrice: maxPriceController.text,
+                            minPrice: minPriceController.text,
+                            productImage: picker!,
                           ));
                         }
                       },
