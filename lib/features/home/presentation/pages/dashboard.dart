@@ -65,9 +65,10 @@ class _DashboardState extends State<Dashboard> {
       setState(() {
         isLoading = false;
       });
-      // Fallback to a default image or handle error
       carouselImages = [
-        'https://via.placeholder.com/150' // Fallback image
+        "https://iitmandi.ac.in/images/slider/slider5.jpg",
+        "https://iitmandi.ac.in/images/slider/slider4.jpg",
+        "https://iitmandi.ac.in/images/slider/slider3.jpg",
       ];
     }
   }
@@ -111,7 +112,7 @@ class _DashboardState extends State<Dashboard> {
         "icon": Icons.shopping_cart_outlined,
         "path": UhlLinkRoutesNames.buySellPage,
         'pathParameters': {
-          "isGuest": jsonEncode(widget.isGuest),
+           "isGuest": jsonEncode(widget.isGuest),
           "user": jsonEncode(widget.user)
         }
       },

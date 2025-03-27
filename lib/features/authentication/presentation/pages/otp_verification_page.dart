@@ -30,6 +30,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
   int secondsRemaining = 120;
   bool isResendOtpEnabled = false;
   Timer? resendOtpTimer;
+  bool creatingUser = false;
 
   @override
   void initState() {
@@ -82,14 +83,22 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
               backgroundColor: Theme.of(context).cardColor,
               textColor: Theme.of(context).colorScheme.onSurface);
         } else if (state is UserCreating) {
-          // Something Something
+          setState(() {
+            creatingUser = true;
+          });
         } else if (state is UserCreated) {
+          setState(() {
+            creatingUser = false;
+          });
           GoRouter.of(context).goNamed(UhlLinkRoutesNames.home,
               pathParameters: {
                 'isGuest': jsonEncode(false),
                 'user': jsonEncode(state.user.toMap())
               });
         } else if (state is UserCreatingError) {
+          setState(() {
+            creatingUser = false;
+          });
           Fluttertoast.showToast(
               msg:
                   "Something went wrong. Please try again.\nRead the instructions carefully.",
@@ -111,154 +120,154 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
           centerTitle: true,
         ),
         resizeToAvoidBottomInset: false,
-        body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Stack(children: [
-                  SingleChildScrollView(
-                    reverse: true,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.015),
-                        Text("",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .copyWith(fontFamily: 'Montserrat_Regular')),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.03),
-                        Form(
-                          key: otpKey,
-                          child: PinCodeTextField(
-                            controller: otpTextEditingController,
-                            appContext: context,
-                            length: 4,
-                            animationType: AnimationType.fade,
-                            autovalidateMode: AutovalidateMode.disabled,
-                            validator: (v) {
-                              if (v!.length != 4) {
-                                return "Code is of 4 digits.";
-                              } else if (v != widget.otp.toString()) {
-                                return "Invalid Code.";
-                              }
-                              return null;
-                            },
-                            errorTextSpace: 30,
-                            enablePinAutofill: true,
-                            enabled: true,
-                            textStyle: Theme.of(context).textTheme.labelSmall,
-                            pinTheme: PinTheme(
-                                shape: PinCodeFieldShape.box,
-                                borderRadius: BorderRadius.circular(
-                                    MediaQuery.of(context).size.aspectRatio *
-                                        40),
-                                fieldHeight:
-                                    MediaQuery.of(context).size.width * 0.15,
-                                fieldWidth:
-                                    MediaQuery.of(context).size.width * 0.15,
-                                activeColor:
-                                    Theme.of(context).colorScheme.scrim,
-                                activeFillColor: Theme.of(context).cardColor,
-                                selectedColor: Theme.of(context).primaryColor,
-                                selectedFillColor: Theme.of(context).cardColor,
-                                inactiveColor:
-                                    Theme.of(context).colorScheme.scrim,
-                                inactiveFillColor: Theme.of(context).cardColor,
-                                errorBorderColor:
-                                    Theme.of(context).colorScheme.onError),
-                            cursorColor: Theme.of(context).primaryColor,
-                            animationDuration:
-                                const Duration(milliseconds: 300),
-                            // enableActiveFill: true,
-                            errorAnimationController: errorController,
-                            keyboardType: TextInputType.number,
-                            autoDisposeControllers: false
-                            // beforeTextPaste: (value) {
-                            //   return false;
-                            // },
+        body: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+              SingleChildScrollView(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                reverse: true,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.015),
+                    Text("",
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelSmall!
+                            .copyWith(fontFamily: 'Montserrat_Regular')),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                    Form(
+                      key: otpKey,
+                      child: PinCodeTextField(
+                          controller: otpTextEditingController,
+                          appContext: context,
+                          length: 4,
+                          animationType: AnimationType.fade,
+                          autovalidateMode: AutovalidateMode.disabled,
+                          validator: (v) {
+                            if (v!.length != 4) {
+                              return "Code is of 4 digits.";
+                            } else if (v != widget.otp.toString()) {
+                              return "Invalid Code.";
+                            }
+                            return null;
+                          },
+                          errorTextSpace: 30,
+                          enablePinAutofill: true,
+                          enabled: true,
+                          textStyle: Theme.of(context).textTheme.labelSmall,
+                          pinTheme: PinTheme(
+                              shape: PinCodeFieldShape.box,
+                              borderRadius: BorderRadius.circular(
+                                  MediaQuery.of(context).size.aspectRatio * 40),
+                              fieldHeight:
+                                  MediaQuery.of(context).size.width * 0.15,
+                              fieldWidth:
+                                  MediaQuery.of(context).size.width * 0.15,
+                              activeColor: Theme.of(context).colorScheme.scrim,
+                              activeFillColor: Theme.of(context).cardColor,
+                              selectedColor: Theme.of(context).primaryColor,
+                              selectedFillColor: Theme.of(context).cardColor,
+                              inactiveColor:
+                                  Theme.of(context).colorScheme.scrim,
+                              inactiveFillColor: Theme.of(context).cardColor,
+                              errorBorderColor:
+                                  Theme.of(context).colorScheme.onError),
+                          cursorColor: Theme.of(context).primaryColor,
+                          animationDuration: const Duration(milliseconds: 300),
+                          // enableActiveFill: true,
+                          errorAnimationController: errorController,
+                          keyboardType: TextInputType.number,
+                          autoDisposeControllers: false
+                          // beforeTextPaste: (value) {
+                          //   return false;
+                          // },
                           ),
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
-                        isResendOtpEnabled
-                            ? GestureDetector(
-                                onTap: () {
-                                  BlocProvider.of<AuthenticationBloc>(context)
-                                      .add(SendOTPEvent(
-                                          name: user.name,
-                                          email: user.email,
-                                          password: user.password,
-                                          image: user.image,
-                                          otp: widget.otp));
-                                },
-                                child: Text("Resend Code",
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    isResendOtpEnabled
+                        ? GestureDetector(
+                            onTap: () {
+                              BlocProvider.of<AuthenticationBloc>(context).add(
+                                  SendOTPEvent(
+                                      name: user.name,
+                                      email: user.email,
+                                      password: user.password,
+                                      image: user.image,
+                                      otp: widget.otp));
+                            },
+                            child: Text("Resend Code",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .copyWith(
+                                        fontFamily: 'Montserrat_Regular',
+                                        color: Theme.of(context).primaryColor)),
+                          )
+                        : RichText(
+                            text: TextSpan(
+                                text: "Resend code in ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .copyWith(fontFamily: 'Montserrat_Regular'),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: "$secondsRemaining ",
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelSmall!
                                         .copyWith(
                                             fontFamily: 'Montserrat_Regular',
-                                            color: Theme.of(context)
-                                                .primaryColor)),
-                              )
-                            : RichText(
-                                text: TextSpan(
-                                    text: "Resend code in ",
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                  ),
+                                  TextSpan(
+                                    text: "sec",
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelSmall!
                                         .copyWith(
                                             fontFamily: 'Montserrat_Regular'),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: "$secondsRemaining ",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .copyWith(
-                                                fontFamily:
-                                                    'Montserrat_Regular',
-                                                color: Theme.of(context)
-                                                    .primaryColor),
-                                      ),
-                                      TextSpan(
-                                        text: "sec",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .copyWith(
-                                                fontFamily:
-                                                    'Montserrat_Regular'),
-                                      ),
-                                    ]),
-                              ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.03),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 20,
-                    child: ScreenWidthButton(
-                        text: "Verify OTP",
-                        buttonFunc: () async {
-                          bool otpValidator = otpKey.currentState!.validate();
+                                  ),
+                                ]),
+                          ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                child: ScreenWidthButton(
+                    text: "Verify OTP",
+                    buttonFunc: () async {
+                      bool otpValidator = otpKey.currentState!.validate();
 
-                          if (otpValidator) {
-                            BlocProvider.of<AuthenticationBloc>(context).add(
-                                SignUpEvent(
-                                    name: user.name,
-                                    email: user.email,
-                                    password: user.password,
-                                    image: user.image ?? ""));
-                          }
-                        }),
-                  )
-                ]))),
+                      if (otpValidator) {
+                        BlocProvider.of<AuthenticationBloc>(context).add(
+                            SignUpEvent(
+                                name: user.name,
+                                email: user.email,
+                                password: user.password,
+                                image: user.image ?? ""));
+                      }
+                    }),
+              ),
+              if (creatingUser)
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  color: Theme.of(context).cardColor.withAlpha(200),
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                )
+            ])),
       ),
     );
   }

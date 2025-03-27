@@ -1,8 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:uhl_link/features/authentication/domain/entities/user_entity.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../features/authentication/data/data_sources/user_data_sources.dart' show UhlUsersDB;
+import '../features/home/data/data_sources/feed_portal_data_sources.dart' show FeedDB;
+import '../features/home/data/data_sources/notification_data_sources.dart' show NotificationsDB;
+import '../features/home/data/data_sources/buy_sell_data_sources.dart' show BuySellDB;
+import '../features/home/data/data_sources/job_portal_data_sources.dart' show JobPortalDB;
+import '../features/home/data/data_sources/lost_found_data_sources.dart';
+import '../features/authentication/domain/entities/user_entity.dart';
 
 String getIdFromDriveLink(String url) {
   final RegExp regex =
@@ -47,4 +55,14 @@ Future<UserEntity?> getUser() async {
   } else {
     return null;
   }
+}
+
+Future<void> connectToDB() async {
+  await dotenv.load(fileName: "institute.env");
+  await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await BuySellDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await NotificationsDB.connect(dotenv.env['DB_CONNECTION_URL']!);
+  await FeedDB.connect(dotenv.env['DB_CONNECTION_URL']!);
 }

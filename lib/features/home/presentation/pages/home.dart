@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
       Dashboard(isGuest: widget.isGuest, user: widget.user),
       FeedPage(isGuest: widget.isGuest, user: widget.user),
       Academics(isGuest: widget.isGuest, user: widget.user),
-      const JobPortalPage(),
+      JobPortalPage(isGuest: widget.isGuest),
       Profile(isGuest: widget.isGuest, user: widget.user),
     ];
     return Scaffold(
@@ -86,8 +86,7 @@ class _HomePageState extends State<HomePage> {
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.dashboard_rounded), label: "Dashboard"),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.feed), label: "Feed"),
+            BottomNavigationBarItem(icon: Icon(Icons.feed), label: "Feed"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.school_rounded), label: "Academics"),
             BottomNavigationBarItem(

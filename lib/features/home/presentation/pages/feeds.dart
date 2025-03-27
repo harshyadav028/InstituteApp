@@ -44,7 +44,7 @@ class _FeedPageState extends State<FeedPage> {
               if (feedItems.isEmpty) {
                 return Center(
                     child: Text('No feeds available',
-                        style: Theme.of(context).textTheme.labelSmall));
+                        style: Theme.of(context).textTheme.bodySmall));
               }
               return ListView.separated(
                 physics: const ClampingScrollPhysics(),
@@ -114,7 +114,7 @@ class _FeedPageState extends State<FeedPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CarouselSlider(
+                feedItems[index].images.isNotEmpty ? CarouselSlider(
                   items: feedItems[index]
                       .images
                       .map((image) => ClipRRect(
@@ -146,8 +146,8 @@ class _FeedPageState extends State<FeedPage> {
                       viewportFraction: 1,
                       autoPlayInterval: const Duration(seconds: 5),
                       enlargeCenterPage: true),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                ) : Container(),
+                feedItems[index].images.isNotEmpty ? SizedBox(height: MediaQuery.of(context).size.height * 0.02) : Container(),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: Column(

@@ -5,6 +5,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
 
+import '../utils/functions.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -24,7 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _checkUserLoggedIn() async {
     // Check if a user token exists
     final token = await _storage.read(key: 'user');
-    if (!mounted) return;
+    // if (!mounted) return;
+    await connectToDB();
     // Navigate based on the token presence
     if (token != null) {
       GoRouter.of(context).goNamed(UhlLinkRoutesNames.home,

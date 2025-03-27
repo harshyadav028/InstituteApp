@@ -112,8 +112,7 @@ flutter:
   assets:
     - assets/images/
     - institute.env
-    - assets/cafeteria.json
-  #   - images/a_dot_ham.jpeg
+    # - assets/cafeteria.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

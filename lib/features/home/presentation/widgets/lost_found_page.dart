@@ -23,6 +23,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(seconds: 3));
     BlocProvider.of<LnfBloc>(context).add(const GetLostFoundItemsEvent());
   }
 
@@ -155,10 +156,11 @@ class _LostFoundPageState extends State<LostFoundPage> {
                                                 const Duration(seconds: 5),
                                             enlargeCenterPage: true))
                                     : Container(),
-                                SizedBox(
+                                lnfItems[index].images.isNotEmpty
+                                 ? SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.02,
-                                ),
+                                ) : Container(),
                                 SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.8,
@@ -167,7 +169,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("Name : ${lnfItems[index].name}",
+                                      Text("Name: ${lnfItems[index].name}",
                                           textAlign: TextAlign.start,
                                           softWrap: true,
                                           style: Theme.of(context)
@@ -179,7 +181,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
                                                   .height *
                                               0.01),
                                       Text(
-                                          "Contact : ${lnfItems[index].phoneNo}",
+                                          "Contact: ${lnfItems[index].phoneNo}",
                                           textAlign: TextAlign.start,
                                           softWrap: true,
                                           style: Theme.of(context)
@@ -191,7 +193,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
                                                   .height *
                                               0.01),
                                       Text(
-                                          "Date : ${DateFormat.yMMMMd().format(lnfItems[index].date)}",
+                                          "Date: ${DateFormat.yMMMMd().format(lnfItems[index].date)}",
                                           textAlign: TextAlign.start,
                                           softWrap: true,
                                           style: Theme.of(context)
@@ -203,7 +205,7 @@ class _LostFoundPageState extends State<LostFoundPage> {
                                                   .height *
                                               0.01),
                                       Text(
-                                        "Description : ${lnfItems[index].description}",
+                                        "Description: ${lnfItems[index].description}",
                                         textAlign: TextAlign.start,
                                         softWrap: true,
                                         style: Theme.of(context)

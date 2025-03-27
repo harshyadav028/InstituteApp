@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes_consts.dart';
 import 'package:uhl_link/features/home/presentation/widgets/card.dart';
@@ -100,8 +101,10 @@ class _SettingsPageState extends State<SettingsPage> {
             CardWidget(
                 text: "Sign Out",
                 icon: Icons.logout_rounded,
-                onTap: () {
-                  GoRouter.of(context).pushNamed(UhlLinkRoutesNames.chooseAuth);
+                onTap: () async {
+                  final storage = const FlutterSecureStorage();
+                  await storage.delete(key: "user");
+                  GoRouter.of(context).goNamed(UhlLinkRoutesNames.chooseAuth);
                 }),
           ],
         ),
