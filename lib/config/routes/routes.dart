@@ -17,6 +17,8 @@ import 'package:uhl_link/features/home/presentation/pages/home.dart';
 import 'package:uhl_link/features/home/presentation/widgets/PORs_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/academic_calendar_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/achievements_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/buy_sell_add_item_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/buy_sell_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/cafeteria.dart';
 import 'package:uhl_link/features/home/presentation/widgets/campus_map_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/events_page.dart';
@@ -24,6 +26,7 @@ import 'package:uhl_link/features/home/presentation/widgets/job_details_page.dar
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_add_item_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/lost_found_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/mess_menu_page.dart';
+import 'package:uhl_link/features/home/presentation/widgets/notification_details_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/quick_links_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/settings_page.dart';
 import 'package:uhl_link/features/home/presentation/widgets/notifications_page.dart';
@@ -127,7 +130,7 @@ class UhlLinkRouter {
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
-      // events
+      // Events
       GoRoute(
         name: UhlLinkRoutesNames.events, // Correct name for EventsPage
         path: '/events/:isGuest/:user',
@@ -141,6 +144,30 @@ class UhlLinkRouter {
           );
         },
       ),
+      
+      // Buy & Sell
+      GoRoute(
+          name: UhlLinkRoutesNames.buySellPage,
+          path: '/buy_sell/:isGuest/:user',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: BuySellPage(
+                  isGuest: jsonDecode(state.pathParameters['isGuest']!),
+                  user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
+      GoRoute(
+          name: UhlLinkRoutesNames.buySellAddItemPage,
+          path: '/buy_sell_add_item/:user',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: BuySellAddItemPage(
+                  user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
+
       // Feed
       GoRoute(
           name: UhlLinkRoutesNames.feedAddItemPage,
@@ -232,6 +259,16 @@ class UhlLinkRouter {
                 child: NotificationsPage(
                   isGuest: jsonDecode(state.pathParameters["isGuest"]!),
                   user: jsonDecode(state.pathParameters['user']!),
+                ));
+          }),
+      GoRoute(
+          name: UhlLinkRoutesNames.notificationDetails,
+          path: '/notification_details/:notification',
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                key: state.pageKey,
+                child: NotificationDetailsPage(
+                  notificationMap: jsonDecode(state.pathParameters['notification']!),
                 ));
           }),
       GoRoute(

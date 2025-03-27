@@ -81,7 +81,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   Widget build(BuildContext context) {
     UserEntity user = UserEntity.fromJson(widget.user);
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
+    // final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {

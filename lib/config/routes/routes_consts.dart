@@ -12,6 +12,7 @@ class UhlLinkRoutesNames {
   static const String home = 'home';
 
   static const String notifications = 'notifications';
+  static const String notificationDetails = 'notification_details_page';
   static const String addNotification = 'add_notifications';
 
 
@@ -22,6 +23,9 @@ class UhlLinkRoutesNames {
   static const String quickLinksPage = 'quick_links_page';
   static const String lostFoundPage = 'lost_found_Page';
   static const String lostFoundAddItemPage = 'lost_found_add_item_page';
+  static const String buySellPage = 'buy_sell_page';
+  static const String buySellAddItemPage = 'buy_sell_add_item_page';
+
   static const String feedAddItemPage = 'feed_add_item_page';
   static const String feedDetailPage = 'feed_detail_page';
   static const String events = 'events';

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class FormFieldWidget extends StatefulWidget {
@@ -17,24 +19,23 @@ class FormFieldWidget extends StatefulWidget {
   bool? readOnly;
   int? maxLines;
 
-  FormFieldWidget({
-    super.key,
-    required this.fieldKey,
-    required this.controller,
-    required this.obscureText,
-    required this.validator,
-    this.onChanged,
-    required this.keyboardType,
-    required this.errorText,
-    required this.prefixIcon,
-    required this.showSuffixIcon,
-    required this.hintText,
-    this.onTap,
-    this.readOnly,
-    required this.focusNode,
-    required this.textInputAction,
-    this.maxLines
-  });
+  FormFieldWidget(
+      {super.key,
+      required this.fieldKey,
+      required this.controller,
+      required this.obscureText,
+      required this.validator,
+      this.onChanged,
+      required this.keyboardType,
+      required this.errorText,
+      required this.prefixIcon,
+      required this.showSuffixIcon,
+      required this.hintText,
+      this.onTap,
+      this.readOnly,
+      required this.focusNode,
+      required this.textInputAction,
+      this.maxLines = 1});
 
   @override
   State<FormFieldWidget> createState() => _FormFieldWidgetState();
@@ -72,7 +73,7 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
           onTapOutside: (event) {
             widget.focusNode.unfocus();
           },
-          maxLines: widget.maxLines,
+          maxLines: widget.maxLines == 0 ? null : widget.maxLines,
           readOnly: widget.readOnly ?? false,
           onTap: widget.onTap,
           controller: widget.controller,
@@ -117,10 +118,9 @@ class _FormFieldWidgetState extends State<FormFieldWidget> {
                     )
                   : const Icon(null),
               hintText: widget.hintText,
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .labelSmall
-                  ?.copyWith(color: Theme.of(context).colorScheme.scrim),
+              hintStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.scrim,
+                  overflow: TextOverflow.fade),
               fillColor: Theme.of(context).cardColor,
               filled: true,
               focusedBorder: OutlineInputBorder(

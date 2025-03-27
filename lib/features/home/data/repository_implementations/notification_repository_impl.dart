@@ -1,8 +1,6 @@
 import 'package:uhl_link/features/home/data/data_sources/notification_data_sources.dart';
 import 'package:uhl_link/features/home/domain/entities/notifications_entity.dart';
 import 'package:uhl_link/features/home/domain/repositories/notification_repository.dart';
-import 'package:mongo_dart/mongo_dart.dart' as mongo;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   final NotificationsDB notificationsDB;

@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../widgets/form_field_widget.dart';
 import '../../../../widgets/screen_width_button.dart';
-import '../../../authentication/domain/entities/user_entity.dart';
 import '../bloc/notification_bloc/notification_bloc.dart';
 import '../bloc/notification_bloc/notification_event.dart';
 import '../bloc/notification_bloc/notification_state.dart';
@@ -75,7 +74,7 @@ class _AddNotificationPageState extends State<AddNotificationPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
-    UserEntity user = UserEntity.fromJson(widget.user);
+    // UserEntity user = UserEntity.fromJson(widget.user);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,

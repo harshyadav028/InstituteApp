@@ -20,13 +20,13 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> items = [
-      {
-        "text": "Achievements/PORs",
-        "icon": Icons.emoji_events_rounded,
-        "route": UhlLinkRoutesNames.porsPage,
-        'pathParameters': {},
-        "guest": false
-      },
+      // {
+      //   "text": "Achievements/PORs",
+      //   "icon": Icons.emoji_events_rounded,
+      //   "route": UhlLinkRoutesNames.porsPage,
+      //   'pathParameters': {},
+      //   "guest": false
+      // },
       {
         "text": "Settings",
         "icon": Icons.settings,
