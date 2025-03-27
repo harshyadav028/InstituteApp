@@ -258,6 +258,187 @@ class Constants {
     }
   };
 
+  static Map<String, dynamic> cafeteria = {
+    "cafes": [
+      {
+        "name": "Monal",
+        "time": "9:00 AM - 11:00 PM",
+        "contact": "Not available",
+        "location": "North Campus",
+        "deliveryTime": "10:00 AM - 10:00 PM",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/MONAL/IMG_20250325_182730.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/MONAL/IMG_20250325_182739.jpg"
+        ],
+        "menu": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/MONAL/IMG_20250325_182809.jpg"
+        ]
+      },
+      {
+        "name": "Mocha",
+        "time": "8:00 AM - 10:00 PM",
+        "contact": "Not available",
+        "location": "North Campus",
+        "deliveryTime": "9:00 AM - 9:00 PM",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/BAKE_O_MOCHA/WhatsApp%20Image%202025-03-25%20at%2017.38.12_7168dac8.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/BAKE_O_MOCHA/WhatsApp%20Image%202025-03-25%20at%2017.38.11_ad611072.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/BAKE_O_MOCHA/WhatsApp%20Image%202025-03-25%20at%2017.38.12_726ffc55.jpg"
+        ],
+        "menu": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/BAKE_O_MOCHA/WhatsApp%20Image%202025-03-25%20at%2019.01.48_f4530d7e.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/BAKE_O_MOCHA/WhatsApp%20Image%202025-03-25%20at%2019.01.48_0243d255.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/BAKE_O_MOCHA/WhatsApp%20Image%202025-03-25%20at%2019.01.49_92bebab5.jpg"
+        ]
+      },
+      {
+        "name": "Treepie",
+        "time": "7:00 AM - 9:00 PM",
+        "contact": "+91 9727757397",
+        "location": "North Campus",
+        "deliveryTime": "8:00 AM - 8:00 PM",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/la%20pinos/WhatsApp%20Image%202025-03-27%20at%2014.05.56_bfa92797.jpg"
+        ],
+        "menu": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/la%20pinos/WhatsApp%20Image%202025-03-25%20at%2019.08.41_0e986955.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/la%20pinos/WhatsApp%20Image%202025-03-25%20at%2019.08.41_25366ee3.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/la%20pinos/WhatsApp%20Image%202025-03-25%20at%2019.08.42_b0a191e2.jpg"
+        ]
+      },
+      {
+        "name": "Magpie",
+        "time": "Not available",
+        "contact": "Not available",
+        "location": "South Campus",
+        "deliveryTime": "Not available",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/MAgpie/WhatsApp%20Image%202025-03-23%20at%2016.36.22_684a55a8.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/MAgpie/WhatsApp%20Image%202025-03-23%20at%2016.36.31_ec68fb8e.jpg"
+        ],
+        "menu": [
+          "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0075.jpg",
+          "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0076.jpg"
+        ]
+      },
+      {
+        "name": "Griffon",
+        "time": "Not available",
+        "contact": "Not available",
+        "location": "South Campus",
+        "deliveryTime": "Not available",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/GRiffon/WhatsApp%20Image%202025-03-23%20at%2016.32.35_7eedff74.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/GRiffon/WhatsApp%20Image%202025-03-23%20at%2016.32.35_2306bdd8.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/GRiffon/WhatsApp%20Image%202025-03-23%20at%2016.32.35_e32c748a.jpg"
+        ],
+        "menu": [
+          "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0077.jpg",
+          "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0078.jpg"
+        ]
+      },
+      {
+        "name": "Bulbul",
+        "time": "Not available",
+        "contact": "Not available",
+        "location": "South Campus",
+        "deliveryTime": "Not available",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/BUlbul/WhatsApp%20Image%202025-03-23%20at%2016.34.11_40d6c810.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/BUlbul/WhatsApp%20Image%202025-03-23%20at%2016.34.55_825ce056.jpg"
+        ],
+        "menu": [
+          "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0079.jpg",
+          "https://github.com/Blackcoat123/vertex_photo/raw/main/IMG-20250216-WA0080.jpg"
+        ]
+      },
+      {
+        "name": "AMUL",
+        "time": "9 am-12 pm",
+        "contact": "Not available",
+        "location": "North Campus",
+        "deliveryTime": "Not available",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/Amul/WhatsApp%20Image%202025-03-25%20at%2019.00.24_f0bae467.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/Amul/WhatsApp%20Image%202025-03-25%20at%2019.00.25_4f9c94a2.jpg"
+        ],
+        "menu": []
+      },
+      {
+        "name": "D1 Shakes",
+        "time": "Not available",
+        "contact": "Not available",
+        "location": "South Campus",
+        "deliveryTime": "Not available",
+        "images":[],
+        "menu": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/D1/WhatsApp%20Image%202025-03-23%20at%2016.30.53_27fa1c10.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/D1/WhatsApp%20Image%202025-03-23%20at%2016.30.58_a6b5278d.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/D1/IMG-20250323-WA0013%5B1%5D.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/D1/IMG-20250323-WA0011%5B1%5D.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/D1/IMG-20250323-WA0010%5B1%5D.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/D1/IMG-20250323-WA0012%5B1%5D.jpg"
+        ]
+      },
+      {
+        "name": "The Mithran",
+        "time": "9 am-9 pm",
+        "contact": "Not available",
+        "location": "North Campus",
+        "deliveryTime": "Not available",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/The%20DAIG/IMG_20250325_175309.jpg"
+        ],
+        "menu": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/The%20Mithran/WhatsApp%20Image%202025-03-25%20at%2019.00.26_8474ffd8.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/The%20Mithran/WhatsApp%20Image%202025-03-25%20at%2019.00.27_5f312361.jpg"
+        ]
+      },
+      {
+        "name": "The Diag",
+        "time": "9 am-9 pm",
+        "contact": "Not available",
+        "location": "North Campus",
+        "deliveryTime": "Not available",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/The%20DAIG/IMG_20250325_175828.jpg"
+        ],
+        "menu": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/The%20DAIG/WhatsApp%20Image%202025-03-25%20at%2019.00.26_4bad436f.jpg"
+        ]
+      },
+      {
+        "name": "Trago (Higher Taste)",
+        "time": "9 am-9 pm",
+        "contact": "Not available",
+        "location": "North Campus",
+        "deliveryTime": "Not available",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/TRAGO/IMG_20250325_174554.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/TRAGO/IMG_20250325_174700.jpg"
+        ],
+        "menu": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/TRAGO/WhatsApp%20Image%202025-03-25%20at%2019.00.27_ea306e7f.jpg"
+        ]
+      },
+      {
+        "name": "Fruit Shop",
+        "time": "9 am-9 pm",
+        "contact": "Not available",
+        "location": "North Campus",
+        "deliveryTime": "Not available",
+        "images": [
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/Fruit%20shop/WhatsApp%20Image%202025-03-25%20at%2019.00.25_04586675.jpg",
+          "https://github.com/Gamerboy2810/Appphotos/raw/main/App%20canteen%20pics/Fruit%20shop/WhatsApp%20Image%202025-03-25%20at%2019.00.26_fa1df9a9.jpg"
+        ],
+        "menu":[
+
+
+      ]
+    }
+    ]
+  };
+
   static List<Appointment> getAllDayEvents() {
     return [
       // January 2025
