@@ -10,6 +10,10 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+        body: Center(
+      child: Text("Under Development.",
+          style: Theme.of(context).textTheme.labelSmall),
+    ));
   }
 }

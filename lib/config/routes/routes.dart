@@ -129,7 +129,7 @@ class UhlLinkRouter {
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
-          GoRoute(
+      GoRoute(
           name: UhlLinkRoutesNames.buySellPage,
           path: '/buy_sell/:isGuest/:user',
           pageBuilder: (context, state) {
@@ -140,7 +140,7 @@ class UhlLinkRouter {
                   user: jsonDecode(state.pathParameters['user']!),
                 ));
           }),
-          GoRoute(
+      GoRoute(
           name: UhlLinkRoutesNames.buySellAddItemPage,
           path: '/buy_sell_add_item/:user',
           pageBuilder: (context, state) {
@@ -172,10 +172,13 @@ class UhlLinkRouter {
           }),
       GoRoute(
           name: UhlLinkRoutesNames.jobPortalPage,
-          path: '/job_portal',
+          path: '/job_portal/:isGuest',
           pageBuilder: (context, state) {
             return MaterialPage(
-                key: state.pageKey, child: const JobPortalPage());
+                key: state.pageKey,
+                child: JobPortalPage(
+                  isGuest: jsonDecode(state.pathParameters['isGuest']!),
+                ));
           }),
       GoRoute(
           name: UhlLinkRoutesNames.achievementsPage,
@@ -259,12 +262,16 @@ class UhlLinkRouter {
           );
         },
       ),
+
+      // Test
       GoRoute(
           name: UhlLinkRoutesNames.test,
           path: '/test',
           pageBuilder: (context, state) {
             return MaterialPage(key: state.pageKey, child: const TestScreen());
           }),
+
+      // Cafeteria
       GoRoute(
           name: UhlLinkRoutesNames.cafeteria,
           path: '/cafeteria',

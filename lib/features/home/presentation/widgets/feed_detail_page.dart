@@ -52,7 +52,7 @@ class _FeedDetailPageState extends State<FeedDetailPage> {
               // Carousel Section
               Column(
                 children: [
-                  SizedBox(
+                  widget.images.isNotEmpty ? SizedBox(
                     height: screenHeight * 0.3, // 30% of screen height
                     child: CarouselSlider(
                       items: widget.images
@@ -91,8 +91,8 @@ class _FeedDetailPageState extends State<FeedDetailPage> {
                           autoPlayInterval: const Duration(seconds: 5),
                           enlargeCenterPage: true),
                     ),
-                  ),
-                  SizedBox(height: screenHeight * 0.02),
+                  ) : Container(),
+                  widget.images.isNotEmpty ? SizedBox(height: screenHeight * 0.02) : Container(),
                   // Dots Indicator
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,

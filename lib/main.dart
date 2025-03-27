@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uhl_link/config/routes/routes.dart';
@@ -46,21 +45,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   const storage = FlutterSecureStorage();
   final GoRouter router = UhlLinkRouter().router;
-  await func();
   runApp(BlocProvider<ThemeBloc>(
     create: (context) => ThemeBloc(storage: storage)..loadSavedTheme(),
     child: UhlLink(router: router),
   ));
-}
-
-Future<void> func() async {
-  await dotenv.load(fileName: "institute.env");
-  await UhlUsersDB.connect(dotenv.env['DB_CONNECTION_URL']!);
-  await JobPortalDB.connect(dotenv.env['DB_CONNECTION_URL']!);
-  await LostFoundDB.connect(dotenv.env['DB_CONNECTION_URL']!);
-  await BuySellDB.connect(dotenv.env['DB_CONNECTION_URL']!);
-  await NotificationsDB.connect(dotenv.env['DB_CONNECTION_URL']!);
-  await FeedDB.connect(dotenv.env['DB_CONNECTION_URL']!);
 }
 
 class UhlLink extends StatelessWidget {

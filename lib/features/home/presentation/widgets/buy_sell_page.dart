@@ -133,87 +133,78 @@ class _BuySellPageState extends State<BuySellPage> {
                                             const Duration(seconds: 5),
                                         enlargeCenterPage: true))
                                 : Container(),
+                            bnsItems[index].productImage.isNotEmpty
+                                ? SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02,
+                                  )
+                                : Container(),
                             SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02,
-                            ),
-                            SizedBox(
-                              width:
-                                  MediaQuery.of(context).size.width * 0.8,
+                              width: MediaQuery.of(context).size.width * 0.8,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                      "ProductName : ${bnsItems[index].productName}",
+                                      "Product Name: ${bnsItems[index].productName}",
                                       textAlign: TextAlign.start,
                                       softWrap: true,
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall),
                                   SizedBox(
-                                      height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                          0.01),
-                                  Text(
-                                      "Contact : ${bnsItems[index].phoneNo}",
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.01),
+                                  Text("Contact: ${bnsItems[index].phoneNo}",
                                       textAlign: TextAlign.start,
                                       softWrap: true,
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall),
                                   SizedBox(
-                                      height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                          0.01),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.01),
                                   Text(
-                                      "Date : ${DateFormat.yMMMMd().format(bnsItems[index].addDate)}",
+                                      "Date: ${DateFormat.yMMMMd().format(bnsItems[index].addDate)}",
                                       textAlign: TextAlign.start,
                                       softWrap: true,
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall),
                                   SizedBox(
-                                      height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                          0.01),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.01),
                                   Text(
-                                    "Description : ${bnsItems[index].productDescription}",
+                                    "Description: ${bnsItems[index].productDescription}",
                                     textAlign: TextAlign.start,
                                     softWrap: true,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
                                   ),
                                   SizedBox(
-                                      height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                          0.01),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.01),
                                   Text(
-                                    "MaxPrice : ${bnsItems[index].maxPrice}",
+                                    "MaxPrice: ${bnsItems[index].maxPrice}",
                                     textAlign: TextAlign.start,
                                     softWrap: true,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
                                   ),
                                   SizedBox(
-                                      height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                          0.01),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.01),
                                   Text(
-                                    "MinPrice : ${bnsItems[index].minPrice}",
+                                    "MinPrice: ${bnsItems[index].minPrice}",
                                     textAlign: TextAlign.start,
                                     softWrap: true,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
                                   ),
                                 ],
                               ),

@@ -93,7 +93,7 @@ class UhlUsersDB {
       'name': name,
       'email': email,
       'password': hashPassword(password),
-      'image': image
+      'image': image ?? ""
     };
     try {
       final success = await collection?.updateOne(

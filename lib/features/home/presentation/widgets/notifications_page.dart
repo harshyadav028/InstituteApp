@@ -85,15 +85,15 @@ class _NotificationsPageState extends State<NotificationsPage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall!
-                                    .copyWith(fontWeight: FontWeight.w600),
+                                    .copyWith(fontWeight: FontWeight.w600, fontSize: 17),
                               ),
                               const SizedBox(height: 3),
                               Text(
-                                " ${notification.by}",
+                                notification.by,
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall!
-                                    .copyWith(fontSize: 15),
+                                    .copyWith(fontSize: 14),
                               ),
                             ],
                           ),
