@@ -8,6 +8,7 @@ class FeedItem {
   final String link;
   final String host;
   final String type;
+  final String emailId;
 
   FeedItem(
       {required this.id,
@@ -16,7 +17,9 @@ class FeedItem {
       required this.images,
       required this.link,
       required this.host,
-      required this.type});
+      required this.type,
+        required this.emailId
+      });
 
   factory FeedItem.fromJson(Map<String, dynamic> json) {
     return FeedItem(
@@ -26,7 +29,8 @@ class FeedItem {
         images: List<String>.from(json['images']),
         link: json['link'],
         host: json['host'],
-    type:json['type']
+    type:json['type'],
+        emailId:json['emailId']
     );
   }
 
@@ -38,7 +42,8 @@ class FeedItem {
       'images': images,
       'link': link,
       'host': host,
-      'type':type
+      'type':type,
+      'emailId':emailId
     };
   }
 }

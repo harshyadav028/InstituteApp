@@ -344,7 +344,8 @@ class _FeedAddItemPageState extends State<FeedAddItemPage> {
                             description: descriptionController.text,
                             link: linkController.text,
                             images: picker!,
-                            type:typeController.text
+                            type:typeController.text,
+                              emailId:emailIdController.text
                           ));
                         }
                       },

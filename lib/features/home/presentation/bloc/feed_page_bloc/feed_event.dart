@@ -19,6 +19,7 @@ class AddFeedItemEvent extends FeedEvent {
   final String link;
   final String host;
   final String type;
+  final String emailId;
 
 
   const AddFeedItemEvent(
@@ -27,6 +28,7 @@ class AddFeedItemEvent extends FeedEvent {
       required this.images,
       required this.link,
       required this.host,
-        required this.type
+        required this.type,
+        required this.emailId
       });
 }

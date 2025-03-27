@@ -6,6 +6,7 @@ class FeedItemEntity {
   final String link;
   final String host;
   final String type;
+  final String emailId;
 
   FeedItemEntity(
       {required this.id,
@@ -14,7 +15,8 @@ class FeedItemEntity {
       required this.images,
       required this.link,
       required this.host,
-        required this.type
+        required this.type,
+        required this.emailId
       });
 
   factory FeedItemEntity.fromJson(Map<String, dynamic> json) {
@@ -25,7 +27,8 @@ class FeedItemEntity {
       images: List<String>.from(json['images']),
       link: json['link'],
       host: json['host'],
-      type: json['type']
+      type: json['type'],
+        emailId: json['emailId']
     );
   }
 
@@ -37,7 +40,8 @@ class FeedItemEntity {
       'images': images,
       'link': link,
       'host': host,
-      'type':type
+      'type':type,
+      'emailId':emailId
     };
   }
 }

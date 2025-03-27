@@ -20,7 +20,9 @@ class FeedRepositoryImpl implements FeedRepository {
             images: items[i].images,
             link: items[i].link,
             host: items[i].host,
-            type: items[i].type
+            type: items[i].type,
+            emailId: items[i].emailId
+
         ));
       }
       return allItems;
@@ -31,9 +33,9 @@ class FeedRepositoryImpl implements FeedRepository {
 
   @override
   Future<FeedItemEntity?> addFeedItem(
-      String host, String description, FilePickerResult images, String link,String organiser,String type) async {
+      String host, String description, FilePickerResult images, String link,String organiser,String type,String emailId) async {
     final item =
-        await feedDatabase.addFeeditem(host, description, images, link,organiser,type);
+        await feedDatabase.addFeeditem(host, description, images, link,organiser,type,emailId);
     if (item != null) {
       return FeedItemEntity(
           id: item.id,
@@ -42,7 +44,8 @@ class FeedRepositoryImpl implements FeedRepository {
           images: item.images,
           link: item.link,
           host: item.host,
-          type:item.type
+          type:item.type,
+          emailId:item.emailId
       );
     } else {
       return null;
